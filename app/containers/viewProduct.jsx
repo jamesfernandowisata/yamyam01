@@ -15,7 +15,6 @@ import {
 } from "react-native";
 import Axios from "axios";
 import { SafeAreaView } from "react-navigation";
-import imgResize from "react-native-image-resizer";
 // -g sharp-cli
 
 const { width, height } = Dimensions.get("window");
