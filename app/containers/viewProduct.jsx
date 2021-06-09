@@ -9,13 +9,11 @@ import {
   Dimensions,
   ScrollView,
   FlatList,
-  Card,
-  RefreshControl,
-  ToastAndroid,
+  Card
 } from "react-native";
 import Axios from "axios";
 import { SafeAreaView } from "react-navigation";
-// -g sharp-cli
+//import Swipeout from 'react-native-swipeout';
 
 const { width, height } = Dimensions.get("window");
 const viewProduct = ({ navigation }) => {
@@ -66,18 +64,21 @@ const viewProduct = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>YamYam!</Text>
-      </View>
-      {/* <Button
+    <SafeAreaView style={styles.container}>
+      <View style={{ flex: 1 }}>
+        <View style={styles.headerContainer}>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>YamYam!</Text>
+          </View>
+          {/* <Button
             onPress={() => navigation.navigate("Create")}
             title="Learn More"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           /> */}
-
-      {/* {productList.map(products => (
+        </View>
+        {/* 
+        {productList.map(products => (
         <View key={products.m_product_id}>
         <TouchableOpacity
             onPress={() => navigation.navigate("Detail", products)}
@@ -87,34 +88,25 @@ const viewProduct = ({ navigation }) => {
               <Text style={styles.Subtitle}>{products.description}</Text>
             </View>
           </TouchableOpacity>
-        </View>
-          
+        </View>  
         ))} */}
-      {/* <SafeAreaView style={{ backgroundColor: "red" }}> */}
-      <FlatList
-        data={productList}
-        onEndReachedThreshold={0.01}
-        onEndReached={() => setPage(page + 1)}
-        refreshControl={
-          <RefreshControl
-            refreshing={false}
-            onRefresh={() => getProduct(true)}
-          />
-        }
-        renderItem={({ item, m_product_id }) => (
-          <TouchableOpacity
-            style={styles.productContainer}
-            onPress={() => navigation.navigate("Detail", item)}
-          >
-            <Text>{item.name}</Text>
-            <Text style={styles.Subtitle}>{item.description}</Text>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item, index) => index.toString()}
-      ></FlatList>
-      {/* </SafeAreaView> */}
 
-      {/* <View style={styles.footer}></View> */}
+        <FlatList
+          data={productList}
+          renderItem={({ item, m_product_id }) => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Detail", item)}
+            >
+              <View style={styles.productContainer}>
+                <Text>{item.name}</Text>
+                <Text style={styles.Subtitle}>{item.description}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        ></FlatList>
+        <View style={styles.footer}></View>
+      </View>
       <TouchableOpacity
         onPress={() => navigation.navigate("Create")}
         style={styles.addButton}
@@ -133,7 +125,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 10,
     borderBottomColor: "#00CFE6",
     marginTop: "7%",
-    paddingVertical: 20,
+    paddingVertical: 20
   },
   productContainer: {
     // flex: 1,

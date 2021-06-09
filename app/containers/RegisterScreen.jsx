@@ -17,7 +17,7 @@ const LoginScreen = ({ navigation }) => {
 
   const addProduct = () => {
     const auth = JSON.stringify({
-      username: username,
+      username: username.toLowerCase,
       password: password
     });
 

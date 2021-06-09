@@ -48,6 +48,7 @@ const LoginScreen = ({ navigation }) => {
           style={styles.TextInput}
           value={username}
           onChangeText={value => setInputUsername(value)}
+          autoCapitalize="none"
           placeholder="username"
         ></TextInput>
       </View>
@@ -58,6 +59,7 @@ const LoginScreen = ({ navigation }) => {
           value={password}
           onChangeText={value => setInputPassword(value)}
           placeholder="password"
+          autoCapitalize="none"
           secureTextEntry={true}
         ></TextInput>
       </View>

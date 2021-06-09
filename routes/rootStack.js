@@ -11,6 +11,7 @@ import LoginScreen from "../app/containers/LoginScreen";
 import createBP from "../app/BpContainer/createBP";
 import updateBP from "../app/BpContainer/updateBP";
 import viewBP from "../app/BpContainer/viewBP";
+import RegisterScreen from "../app/containers/RegisterScreen";
 
 
 
@@ -22,17 +23,21 @@ const AppNavigator = createStackNavigator(
     Navigation: NavigationPage,
     createBP: createBP,
     updateBP: updateBP,
-    viewBP: viewBP
+    viewBP: viewBP,
+    register: RegisterScreen
   },
   {
-    initialRouteName: "Home",
-    headerMode : "none"
+    initialRouteName: "Navigation",
+    headerMode: "none"
   }
 );
 
-const AuthNavigator =createSwitchNavigator({
-  LoginPage: LoginScreen,
-  App: AppNavigator
-},{initialRouteName :'LoginPage'})
+const AuthNavigator = createSwitchNavigator(
+  {
+    LoginPage: LoginScreen,
+    App: AppNavigator
+  },
+  { initialRouteName: "LoginPage" }
+);
 
 export default AuthNavigator;
