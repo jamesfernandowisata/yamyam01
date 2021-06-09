@@ -17,19 +17,16 @@ const LoginScreen = ({ navigation }) => {
 
   const addProduct = () => {
     const auth = JSON.stringify({
-      username: username,
+      username: username.toLowerCase,
       password: password
     });
 
-    Axios.post("http://192.168.88.152:5000/api/v1/auth/login", auth, {
+    Axios.post("http://192.168.88.152:5000/api/v1/auth/register", auth, {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => {
         console.log("checking response", response);
-        if (response.status === 200) {
-          navigation.navigate("App");
-        } else {
-        }
+        navigation.navigate("LoginPage");
       })
       .catch(error => {
         console.log(JSON.stringify(error));
@@ -40,7 +37,7 @@ const LoginScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.loginScreenContainer}>
       <View style={styles.loginTextContainer}>
-        <Text style={styles.loginText}>Login</Text>
+        <Text style={styles.loginText}>Register</Text>
       </View>
 
       <View style={styles.usernameForm}>
@@ -48,7 +45,6 @@ const LoginScreen = ({ navigation }) => {
           style={styles.TextInput}
           value={username}
           onChangeText={value => setInputUsername(value)}
-          autoCapitalize="none"
           placeholder="username"
         ></TextInput>
       </View>
@@ -59,7 +55,6 @@ const LoginScreen = ({ navigation }) => {
           value={password}
           onChangeText={value => setInputPassword(value)}
           placeholder="password"
-          autoCapitalize="none"
           secureTextEntry={true}
         ></TextInput>
       </View>
@@ -68,14 +63,7 @@ const LoginScreen = ({ navigation }) => {
         onPress={addProduct}
         style={styles.loginButtonContainer}
       >
-        <Text style={styles.loginButtonText}>Login</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate("register")}
-        style={styles.registerButtonContainer}
-      >
-        <Text style={styles.registerText}>Register now</Text>
+        <Text style={styles.loginButtonText}>Register</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

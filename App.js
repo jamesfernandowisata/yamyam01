@@ -3,11 +3,11 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet, Text, View } from "react-native";
 import Main from "./app/containers/Main";
-import AppNavigator from "./routes/rootStack";
+import AuthNavigator from "./routes/rootStack";
 import { createAppContainer } from "react-navigation";
 // import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-const AppContainer = createAppContainer(AppNavigator);
+const AppContainer = createAppContainer(AuthNavigator);
 
 // const TabNavigator = createBottomTabNavigator({
 //   Home: HomeScreen,

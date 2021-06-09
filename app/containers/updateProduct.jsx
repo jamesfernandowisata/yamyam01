@@ -5,7 +5,8 @@ import {
   StyleSheet,
   TextInput,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  SafeAreaView
 } from "react-native";
 import Axios from "axios";
 
@@ -72,10 +73,10 @@ function updateProduct({ navigation }) {
   const [m_product_id] = useState(navigation.getParam("m_product_id"));
 
   return (
-    <View style={styles.updateView}>
-      <View style={styles.header}>
+    <SafeAreaView style={styles.updateView}>
+      <SafeAreaView style={styles.header}>
         <Text style={styles.headerText}>Product</Text>
-      </View>
+      </SafeAreaView>
       <View style={styles.inputForm}>
         <View style={styles.textContainer}>
           {/* <Text style={styles.text}>Name</Text> */}
@@ -124,13 +125,14 @@ function updateProduct({ navigation }) {
           <Text style={styles.addButtonText}>DELETE</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   updateView: {
-    flex: 1
+    flex: 1,
+    marginTop: "7%"
   },
   addButtonText: {
     fontSize: 30,

@@ -8,9 +8,11 @@ import {
   Button,
   Dimensions,
   ScrollView,
-  FlatList
+  FlatList,
+  Card
 } from "react-native";
 import Axios from "axios";
+import { SafeAreaView } from "react-navigation";
 //import Swipeout from 'react-native-swipeout';
 
 const { width, height } = Dimensions.get("window");
@@ -36,8 +38,8 @@ const viewProduct = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View>
+    <SafeAreaView style={styles.container}>
+      <View style={{ flex: 1 }}>
         <View style={styles.headerContainer}>
           <View style={styles.header}>
             <Text style={styles.headerText}>YamYam!</Text>
@@ -49,9 +51,10 @@ const viewProduct = ({ navigation }) => {
             accessibilityLabel="Learn more about this purple button"
           /> */}
         </View>
-
-        {/* {productList.map(products => (
-          <TouchableOpacity
+        {/* 
+        {productList.map(products => (
+        <View key={products.m_product_id}>
+        <TouchableOpacity
             onPress={() => navigation.navigate("Detail", products)}
           >
             <View style={styles.productContainer}>
@@ -59,7 +62,9 @@ const viewProduct = ({ navigation }) => {
               <Text style={styles.Subtitle}>{products.description}</Text>
             </View>
           </TouchableOpacity>
+        </View>  
         ))} */}
+
         <FlatList
           data={productList}
           renderItem={({ item, m_product_id }) => (
@@ -73,12 +78,7 @@ const viewProduct = ({ navigation }) => {
             </TouchableOpacity>
           )}
           keyExtractor={(item, index) => index.toString()}
-          onEndReached={({ isLoading }) => {
-            setPageCurrent(pageCurrent + 1);
-            setIsLoading(true);
-          }}
         ></FlatList>
-
         <View style={styles.footer}></View>
       </View>
       <TouchableOpacity
@@ -87,22 +87,19 @@ const viewProduct = ({ navigation }) => {
       >
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
   header: {
     backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
     borderBottomWidth: 10,
     borderBottomColor: "#00CFE6",
-    paddingTop: 20,
-    paddingBottom: 20
+    marginTop: "7%",
+    paddingVertical: 20
   },
   productContainer: {
     // flex: 1,
