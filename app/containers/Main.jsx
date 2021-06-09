@@ -6,15 +6,18 @@ import {
   View,
   TouchableOpacity,
   Button,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from "react-native";
 import Axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 
 import { getPixelSizeForLayoutSize } from "react-native/Libraries/Utilities/PixelRatio";
+import { SafeAreaView } from "react-navigation";
 
 //const UOM = [{ name: "KG" }, { name: "Ekor" }];
 
+const { width, height } = Dimensions.get("window");
 const Main = ({ navigation, screenName }) => {
   const [name, setInputName] = useState("");
   const [value, setInputValue] = useState("");
@@ -75,7 +78,7 @@ const Main = ({ navigation, screenName }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.header}>
           <Text style={styles.headerText}>Product</Text>
@@ -142,7 +145,7 @@ const Main = ({ navigation, screenName }) => {
               style={styles.textInput}
               value={price}
               keyboardType="numeric"
-              onChangeText={value => validateInput(value)}
+              onChangeText={value => setInputPrice(value)}
               placeholder="Price"
             ></TextInput>
           </View>
@@ -158,7 +161,7 @@ const Main = ({ navigation, screenName }) => {
       <TouchableOpacity onPress={addProduct} style={styles.addButton}>
         <Text style={styles.addButtonText}>Create</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -247,11 +250,12 @@ const styles = StyleSheet.create({
     height: 50
   },
   addButton: {
+    width: width * 0.3,
+    height: height * 0.1,
     position: "absolute",
-    bottom: 30,
+    marginTop: height * 0.7,
     backgroundColor: "#21272b",
-    width: 160,
-    height: 80,
+    marginVertical: height * 0.01,
     borderRadius: 10,
     alignSelf: "center",
     alignItems: "center",

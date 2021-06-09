@@ -6,10 +6,11 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
+import { SafeAreaView } from "react-navigation";
 
 const NavigationPage = ({ navigation }) => {
   return (
-    <View style={styles.navigationContainer}>
+    <SafeAreaView style={styles.navigationContainer}>
       <View style={styles.header}>
         <Text style={styles.headerText}>YamYam!</Text>
       </View>
@@ -34,7 +35,7 @@ const NavigationPage = ({ navigation }) => {
       <TouchableOpacity style={styles.orderLineContainer}>
         <Text style={styles.textButton}>OrderLine</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -95,7 +96,8 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 10,
     // borderBottomColor: "dodgerblue",
     borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20
+    borderBottomLeftRadius: 20,
+    marginTop: "8%"
   },
   headerText: {
     color: "#ffffff",

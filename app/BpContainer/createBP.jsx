@@ -6,7 +6,8 @@ import {
   View,
   TouchableOpacity,
   Button,
-  ScrollView
+  ScrollView,
+  SafeAreaView
 } from "react-native";
 import Axios from "axios";
 import { Picker } from "@react-native-picker/picker";
@@ -44,7 +45,7 @@ const createBP = ({ navigation, screenName }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.header}>
           <Text style={styles.headerText}>BPartners</Text>
@@ -108,7 +109,7 @@ const createBP = ({ navigation, screenName }) => {
       <TouchableOpacity onPress={addBpartner} style={styles.addButton}>
         <Text style={styles.addButtonText}>Create</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -124,7 +125,8 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 10,
     // borderBottomColor: "dodgerblue",
     borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20
+    borderBottomLeftRadius: 20,
+    marginTop: "8%"
   },
 
   inputForm: {

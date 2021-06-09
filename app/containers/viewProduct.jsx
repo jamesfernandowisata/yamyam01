@@ -8,50 +8,79 @@ import {
   Button,
   Dimensions,
   ScrollView,
-  FlatList
+  FlatList,
+  Card,
+  RefreshControl,
+  ToastAndroid,
 } from "react-native";
 import Axios from "axios";
-//import Swipeout from 'react-native-swipeout';
+import { SafeAreaView } from "react-navigation";
+import imgResize from "react-native-image-resizer";
+// -g sharp-cli
 
 const { width, height } = Dimensions.get("window");
 const viewProduct = ({ navigation }) => {
   const [productList, setProductList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [fetchMore, setFetchMore] = useState(true);
 
   useEffect(() => {
     getProduct();
   }, []);
 
-  const getProduct = () => {
-    Axios.get("http://192.168.88.152:5000/api/v1/products")
-      .then(response => {
-        console.log("check", response.data);
+  useEffect(() => {
+    getMoreProduct();
+  }, [page]);
+
+  const getProduct = (refresh) => {
+    if (refresh) {
+      setFetchMore(true);
+    }
+    Axios.get(`http://192.168.88.152:5000/api/v1/products?page=${page}&limit=8`)
+      .then((response) => {
         setProductList(response.data.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(JSON.stringify(error));
       });
+    // console.log("Page: ", page);
   };
-  {
-    console.log(productList);
-  }
+
+  const getMoreProduct = () => {
+    console.log("check", fetchMore);
+    console.log(page);
+    if (fetchMore) {
+      Axios.get(
+        `http://192.168.88.152:5000/api/v1/products?page=${page}&limit=8`
+      )
+        .then((response) => {
+          if (response.data.isMaxPage) {
+            setFetchMore(false);
+          }
+          setProductList(response.data.data);
+        })
+        .catch((error) => {
+          console.log(JSON.stringify(error));
+        });
+    }
+    // console.log("Page: ", page);
+  };
 
   return (
-    <View style={styles.container}>
-      <View>
-        <View style={styles.headerContainer}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>YamYam!</Text>
-          </View>
-          {/* <Button
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>YamYam!</Text>
+      </View>
+      {/* <Button
             onPress={() => navigation.navigate("Create")}
             title="Learn More"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           /> */}
-        </View>
 
-        {/* {productList.map(products => (
-          <TouchableOpacity
+      {/* {productList.map(products => (
+        <View key={products.m_product_id}>
+        <TouchableOpacity
             onPress={() => navigation.navigate("Detail", products)}
           >
             <View style={styles.productContainer}>
@@ -59,50 +88,53 @@ const viewProduct = ({ navigation }) => {
               <Text style={styles.Subtitle}>{products.description}</Text>
             </View>
           </TouchableOpacity>
+        </View>
+          
         ))} */}
-        <FlatList
-          data={productList}
-          renderItem={({ item, m_product_id }) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Detail", item)}
-            >
-              <View style={styles.productContainer}>
-                <Text>{item.name}</Text>
-                <Text style={styles.Subtitle}>{item.description}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          onEndReached={({ isLoading }) => {
-            setPageCurrent(pageCurrent + 1);
-            setIsLoading(true);
-          }}
-        ></FlatList>
+      {/* <SafeAreaView style={{ backgroundColor: "red" }}> */}
+      <FlatList
+        data={productList}
+        onEndReachedThreshold={0.01}
+        onEndReached={() => setPage(page + 1)}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={() => getProduct(true)}
+          />
+        }
+        renderItem={({ item, m_product_id }) => (
+          <TouchableOpacity
+            style={styles.productContainer}
+            onPress={() => navigation.navigate("Detail", item)}
+          >
+            <Text>{item.name}</Text>
+            <Text style={styles.Subtitle}>{item.description}</Text>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      ></FlatList>
+      {/* </SafeAreaView> */}
 
-        <View style={styles.footer}></View>
-      </View>
+      {/* <View style={styles.footer}></View> */}
       <TouchableOpacity
         onPress={() => navigation.navigate("Create")}
         style={styles.addButton}
       >
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
   header: {
     backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
     borderBottomWidth: 10,
     borderBottomColor: "#00CFE6",
-    paddingTop: 20,
-    paddingBottom: 20
+    marginTop: "7%",
+    paddingVertical: 20,
   },
   productContainer: {
     // flex: 1,
@@ -112,12 +144,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#ffffff",
     borderRadius: 10,
-    elevation: 5
+    elevation: 5,
   },
   deleteButton: {
     backgroundColor: "#ff0000",
     width: width * 0.5,
-    color: "#ffffff"
+    color: "#ffffff",
   },
   Title: {
     width: width,
@@ -125,24 +157,24 @@ const styles = StyleSheet.create({
     marginVertical: width * 0.03,
     color: "black",
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   Subtitle: {
     marginHorizontal: width * 0.05,
     fontSize: 15,
-    color: "gray"
+    color: "gray",
   },
   footer: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    zIndex: 10
+    zIndex: 10,
   },
   addButtonText: {
     color: "#eeeeee",
     fontSize: 26,
-    fontWeight: "700"
+    fontWeight: "700",
   },
   addButton: {
     position: "absolute",
@@ -155,7 +187,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
-    elevation: 8
+    elevation: 8,
   },
   buttonContainer: {
     position: "absolute",
@@ -167,8 +199,8 @@ const styles = StyleSheet.create({
     elevation: 2,
     zIndex: 11,
     left: 20,
-    bottom: 60
-  }
+    bottom: 60,
+  },
 });
 
 export default viewProduct;
