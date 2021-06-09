@@ -9,7 +9,7 @@ import {
   Alert
 } from "react-native";
 import { SafeAreaView } from "react-navigation";
-import HandleBack from "./exit";
+
 
 const NavigationPage = ({ navigation }) => {
   BackHandler.addEventListener("hardwareBackPress", function() {
