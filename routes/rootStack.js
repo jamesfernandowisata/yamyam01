@@ -13,6 +13,8 @@ import updateBP from "../app/BpContainer/updateBP";
 import viewBP from "../app/BpContainer/viewBP";
 import RegisterScreen from "../app/containers/RegisterScreen";
 
+
+
 const AppNavigator = createStackNavigator(
   {
     Home: viewProduct,

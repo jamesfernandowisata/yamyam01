@@ -19,6 +19,8 @@ import { Icon } from 'react-native-elements'
 const { width, height } = Dimensions.get("window");
 const viewProduct = ({ navigation }) => {
   const [productList, setProductList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [fetchMore, setFetchMore] = useState(true);
 
   useEffect(() => {
     getProduct();
@@ -30,13 +32,31 @@ const viewProduct = ({ navigation }) => {
         console.log("check", response.data);
         setProductList(response.data.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(JSON.stringify(error));
       });
+    // console.log("Page: ", page);
   };
-  {
-    console.log(productList);
-  }
+
+  const getMoreProduct = () => {
+    console.log("check", fetchMore);
+    console.log(page);
+    if (fetchMore) {
+      Axios.get(
+        `http://192.168.88.152:5000/api/v1/products?page=${page}&limit=8`
+      )
+        .then((response) => {
+          if (response.data.isMaxPage) {
+            setFetchMore(false);
+          }
+          setProductList(response.data.data);
+        })
+        .catch((error) => {
+          console.log(JSON.stringify(error));
+        });
+    }
+    // console.log("Page: ", page);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -114,12 +134,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#ffffff",
     borderRadius: 10,
-    elevation: 5
+    elevation: 5,
   },
   deleteButton: {
     backgroundColor: "#ff0000",
     width: width * 0.5,
-    color: "#ffffff"
+    color: "#ffffff",
   },
   Title: {
     width: width,
@@ -127,24 +147,24 @@ const styles = StyleSheet.create({
     marginVertical: width * 0.03,
     color: "black",
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   Subtitle: {
     marginHorizontal: width * 0.05,
     fontSize: 15,
-    color: "gray"
+    color: "gray",
   },
   footer: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    zIndex: 10
+    zIndex: 10,
   },
   addButtonText: {
     color: "#eeeeee",
     fontSize: 26,
-    fontWeight: "700"
+    fontWeight: "700",
   },
   addButton: {
     position: "absolute",
@@ -157,7 +177,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
-    elevation: 8
+    elevation: 8,
   },
   buttonContainer: {
     position: "absolute",
@@ -169,8 +189,8 @@ const styles = StyleSheet.create({
     elevation: 2,
     zIndex: 11,
     left: 20,
-    bottom: 60
-  }
+    bottom: 60,
+  },
 });
 
 export default viewProduct;
