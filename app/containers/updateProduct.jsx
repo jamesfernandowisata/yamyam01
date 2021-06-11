@@ -20,7 +20,7 @@ function updateProduct({ navigation }) {
     });
 
     Axios.put(
-      `http://192.168.88.152:5000/api/v1/products/${m_product_id}`,
+      `http://178.128.30.185:5000/api/v1/products/${m_product_id}`,
       product,
       {
         headers: { "Content-Type": "application/json" }
@@ -48,7 +48,7 @@ function updateProduct({ navigation }) {
       price: parseInt(price)
     });
 
-    Axios.delete(`http://192.168.88.152:5000/api/v1/products/${m_product_id}`, {
+    Axios.delete(`http://178.128.30.185:5000/api/v1/products/${m_product_id}`, {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => {

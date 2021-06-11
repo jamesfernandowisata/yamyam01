@@ -28,7 +28,7 @@ const createBP = ({ navigation, screenName }) => {
       description: description
     });
 
-    Axios.post("http://192.168.88.152:5000/api/v1/partners", partners, {
+    Axios.post("http://178.128.30.185:5000/api/v1/partners", partners, {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => {

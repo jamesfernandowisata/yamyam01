@@ -26,7 +26,7 @@ const Main = ({ navigation, screenName }) => {
   const [UOM, setUOM] = useState([]);
   const [selectedUOM, setSelectedUOM] = useState();
   const getUOM = () => {
-    Axios.get("http://192.168.88.152:5000/api/v1/uoms ")
+    Axios.get("http://178.128.30.185:5000/api/v1/uoms ")
       .then(response => {
         console.log("check", response.data);
         setUOM(response.data.data);
@@ -49,7 +49,7 @@ const Main = ({ navigation, screenName }) => {
       c_uom_id: selectedUOM
     });
 
-    Axios.post("http://192.168.88.152:5000/api/v1/products", product, {
+    Axios.post("http://178.128.30.185:5000/api/v1/products", product, {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => {

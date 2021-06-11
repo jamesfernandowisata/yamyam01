@@ -14,6 +14,7 @@ import {
 import Axios from "axios";
 import { SafeAreaView } from "react-navigation";
 //import Swipeout from 'react-native-swipeout';
+import { Icon } from 'react-native-elements'
 
 const { width, height } = Dimensions.get("window");
 const viewProduct = ({ navigation }) => {
@@ -24,7 +25,7 @@ const viewProduct = ({ navigation }) => {
   }, []);
 
   const getProduct = () => {
-    Axios.get("http://192.168.88.152:5000/api/v1/products")
+    Axios.get("http://178.128.30.185:5000/api/v1/products")
       .then(response => {
         console.log("check", response.data);
         setProductList(response.data.data);
@@ -79,6 +80,7 @@ const viewProduct = ({ navigation }) => {
           )}
           keyExtractor={(item, index) => index.toString()}
         ></FlatList>
+
         <View style={styles.footer}></View>
       </View>
       <TouchableOpacity
@@ -92,6 +94,9 @@ const viewProduct = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   header: {
     backgroundColor: "#ffffff",
     alignItems: "center",

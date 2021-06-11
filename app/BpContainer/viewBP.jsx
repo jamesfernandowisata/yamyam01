@@ -11,6 +11,7 @@ import {
   FlatList
 } from "react-native";
 import Axios from "axios";
+import { SafeAreaView } from "react-navigation";
 //import Swipeout from 'react-native-swipeout';
 
 const { width, height } = Dimensions.get("window");
@@ -22,7 +23,7 @@ const viewBP = ({ navigation }) => {
   }, []);
 
   const getProduct = () => {
-    Axios.get("http://192.168.88.152:5000/api/v1/partners")
+    Axios.get("http://178.128.30.185:5000/api/v1/partners")
       .then(response => {
         console.log("check", response.data);
         setProductList(response.data.data);
@@ -36,8 +37,8 @@ const viewBP = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <ScrollView>
+    <SafeAreaView style={styles.container}>
+      <View>
         <View style={styles.headerContainer}>
           <View style={styles.header}>
             <Text style={styles.headerText}>YamYam!</Text>
@@ -50,7 +51,7 @@ const viewBP = ({ navigation }) => {
           /> */}
         </View>
 
-        {productList.map(products => (
+        {/* {productList.map(products => (
           <TouchableOpacity
             onPress={() => navigation.navigate("updateBP", products)}
           >
@@ -59,17 +60,32 @@ const viewBP = ({ navigation }) => {
               <Text style={styles.Subtitle}>{products.description}</Text>
             </View>
           </TouchableOpacity>
-        ))}
+        ))} */}
+
+        <FlatList
+          data={productList}
+          renderItem={({ item, c_bpartner_id }) => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("updateBP", item)}
+            >
+              <View style={styles.productContainer}>
+                <Text>{item.name}</Text>
+                <Text style={styles.Subtitle}>{item.description}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        ></FlatList>
 
         <View style={styles.footer}></View>
-      </ScrollView>
+      </View>
       <TouchableOpacity
         onPress={() => navigation.navigate("createBP")}
         style={styles.addButton}
       >
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

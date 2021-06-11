@@ -19,7 +19,7 @@ function updateBP({ navigation }) {
     });
 
     Axios.put(
-      `http://192.168.88.152:5000/api/v1/partners/${m_partners_id}`,
+      `http://178.128.30.185:5000/api/v1/partners/${m_partners_id}`,
       product,
       {
         headers: { "Content-Type": "application/json" }
