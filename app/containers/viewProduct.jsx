@@ -14,7 +14,7 @@ import {
 import Axios from "axios";
 import { SafeAreaView } from "react-navigation";
 //import Swipeout from 'react-native-swipeout';
-import { Icon } from 'react-native-elements'
+
 
 const { width, height } = Dimensions.get("window");
 const viewProduct = ({ navigation }) => {

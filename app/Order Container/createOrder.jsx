@@ -1,161 +1,124 @@
 import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-  Button,
-  ScrollView,
-  SafeAreaView
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+    TouchableOpacity,
+    Button,
+    ScrollView,
+    SafeAreaView
 } from "react-native";
 import Axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 
 import { getPixelSizeForLayoutSize } from "react-native/Libraries/Utilities/PixelRatio";
 
-const createBP = ({ navigation, screenName }) => {
-  const [name, setInputName] = useState("");
-  const [value, setInputValue] = useState("");
-  const [description, setInputDescription] = useState("");
-  const [bpCountryList, setInputsetBpCountryList] = useState([]);
-  const [bpDistrictList,setBpDistrictList] = useState([]);
-  const [bpCityList, setBpCityList] = useState([]);
-  const [bpRegionList, setBpRegionList] = useState([]);
+const createOrder = ({ navigation, screenName }) => {
+    const [name, setInputName] = useState("");
+    const [value, setInputValue] = useState("");
+    const [description, setInputDescription] = useState("");
+    const [orderLocation, setOrderLocation] = useState("");
+    const [selectOrder, setSelectOrder] = useState();
 
-  const [selectedBPCountry, setselectedBPCountry] = useState();
-  
-
-  const addBpartner = () => {
+    const addOrder = () => {
     const partners = JSON.stringify({
-      name: name,
-      value: value,
-      description: description
+        name: name,
+        value: value,
+        description: description
     });
 
     Axios.post("http://178.128.30.185:5000/api/v1/partners", partners, {
-      headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" }
     })
-      .then(response => {
+        .then(response => {
         console.log("checking response", response);
         setInputName("");
         setInputDescription("");
         setInputValue("");
-      })
-      .catch(error => {
+        })
+        .catch(error => {
         console.log(JSON.stringify(error));
-      });
+        });
 
     //    Axios.get('http://192.168.88.233:5000/api/v1/products').then(response=>{console.log(response.data)}) ;
-  };
+    };
 
-  const getBpLocation = () => {
-    Axios.get("http://178.128.30.185:5000/api/v1/countries ")
-      .then(response => {
-        console.log("check", response.data);
-        setUOM(response.data.data);
-      })
-      .catch(error => {
-        console.log(JSON.stringify(error));
-      });
-
-      Axios.get("http://178.128.30.185:5000/api/v1/uoms ")
-      .then(response => {
-        console.log("check", response.data);
-        setUOM(response.data.data);
-      })
-      .catch(error => {
-        console.log(JSON.stringify(error));
-      });
-
-  };
-
-  useEffect(() => {
-    getBpLocation();
-  }, []);
-
-
-
-
-  return (
+    return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+        <ScrollView>
         <View style={styles.header}>
-          <Text style={styles.headerText}>BPartners</Text>
+            <Text style={styles.headerText}>BPartners</Text>
         </View>
 
         <View style={styles.inputForm}>
-          <View style={styles.textContainer}>
+            <View style={styles.textContainer}>
             {/* <Text style={styles.text}>Name</Text> */}
             <TextInput
-              style={styles.textInput}
-              value={name}
-              onChangeText={value => setInputName(value)}
-              placeholder="Name"
+                style={styles.textInput}
+                value={name}
+                onChangeText={value => setInputName(value)}
+                placeholder="Name"
             ></TextInput>
-          </View>
+            </View>
 
-          <View style={styles.textContainer}>
+            <View style={styles.textContainer}>
             {/* <Text style={styles.text}>Value</Text> */}
             <TextInput
-              style={styles.textInput}
-              value={value}
-              onChangeText={value => setInputValue(value)}
-              placeholder="Value"
+                style={styles.textInput}
+                value={value}
+                onChangeText={value => setInputValue(value)}
+                placeholder="Value"
             ></TextInput>
-          </View>
+            </View>
 
-          <View style={styles.textContainer}>
+            <View style={styles.textContainer}>
             {/* <Text style={styles.text}>Description</Text> */}
             <TextInput
-              style={styles.textInput}
-              value={description}
-              onChangeText={value => setInputDescription(value)}
-              placeholder="Description"
+                style={styles.textInput}
+                value={description}
+                onChangeText={value => setInputDescription(value)}
+                placeholder="Description"
             ></TextInput>
-          </View>
-          
+            </View>
+            {/* 
             <View style={styles.textContainer}>
-            <text>Location</text>
             <View style={styles.pickerInput}>
-              <Picker
+                <Picker
                 style={styles.pickerText}
                 selectedValue={bpLocation}
                 onValueChange={(itemValue, itemIndex) =>
-                  setselectedBpLocation(itemValue)
+                    setselectedBpLocation(itemValue)
                 }
-              >
+                >
                 {bpLocation.map(item => {
-                  return (
+                    return (
                     <Picker.Item
-                      key={item.name}
-                      label={item.name}
-                      value={item.name}
+                        key={item.name}
+                        label={item.name}
+                        value={item.name}
                     />
-                  );
+                    );
                 })}
-              </Picker>
+                </Picker>
             </View>
-
-            
-
-          </View> 
+          </View>  */}
         </View>
-      </ScrollView>
-      <View style={styles.footer}></View>
-      <TouchableOpacity onPress={addBpartner} style={styles.addButton}>
+        </ScrollView>
+        <View style={styles.footer}></View>
+        <TouchableOpacity onPress={addBpartner} style={styles.addButton}>
         <Text style={styles.addButtonText}>Create</Text>
-      </TouchableOpacity>
+        </TouchableOpacity>
     </SafeAreaView>
-  );
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
+    container: {
     flex: 1,
     backgroundColor: "#ffffff"
-  },
-  header: {
+    },
+    header: {
     backgroundColor: "#b00020",
     alignItems: "center",
     justifyContent: "center",
@@ -164,13 +127,13 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     borderBottomLeftRadius: 20,
     marginTop: "8%"
-  },
+    },
 
-  inputForm: {
+    inputForm: {
     marginVertical: 10
-  },
+    },
 
-  textContainer: {
+    textContainer: {
     margin: 5,
     //borderLeftWidth: 5,
     //borderTopWidth: 5,
@@ -178,33 +141,33 @@ const styles = StyleSheet.create({
     //borderBottomWidth: 5,
     borderColor: "#FB6949"
     // backgroundColor: "red",
-  },
-  text: {
+    },
+    text: {
     alignSelf: "flex-start",
     fontSize: 24,
     left: 5
-  },
+    },
 
-  headerText: {
+    headerText: {
     color: "#ffffff",
     fontSize: 36,
     paddingVertical: 15,
     fontWeight: "bold"
-  },
+    },
 
-  scrollContainer: {
+    scrollContainer: {
     flex: 1,
     marginBottom: 100
-  },
+    },
 
-  footer: {
+    footer: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
     zIndex: 10
-  },
-  textInput: {
+    },
+    textInput: {
     alignSelf: "stretch",
     //color: "#21272b",
     padding: 10,
@@ -219,8 +182,8 @@ const styles = StyleSheet.create({
     fontSize: 23,
     borderRadius: 5,
     elevation: 3
-  },
-  pickerInput: {
+    },
+    pickerInput: {
     alignSelf: "stretch",
     marginHorizontal: 10,
     marginVertical: 5,
@@ -228,14 +191,14 @@ const styles = StyleSheet.create({
     fontSize: 23,
     borderRadius: 5,
     elevation: 3
-  },
-  pickerText: {
+    },
+    pickerText: {
     alignSelf: "flex-end",
     fontSize: 20,
     width: "100%",
     height: 50
-  },
-  addButton: {
+    },
+    addButton: {
     position: "absolute",
     bottom: 30,
     backgroundColor: "#21272b",
@@ -246,8 +209,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     elevation: 8
-  },
-  buttonContainer: {
+    },
+    buttonContainer: {
     position: "absolute",
     width: 100,
     height: 80,
@@ -258,16 +221,16 @@ const styles = StyleSheet.create({
     zIndex: 11,
     left: 20,
     bottom: 60
-  },
-  updateButton: {
+    },
+    updateButton: {
     fontSize: 20,
     color: "white"
-  },
-  addButtonText: {
+    },
+    addButtonText: {
     color: "#eeeeee",
     fontSize: 26,
     fontWeight: "700"
-  }
+    }
 });
 
 export default createBP;
