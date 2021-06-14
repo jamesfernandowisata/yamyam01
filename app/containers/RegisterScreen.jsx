@@ -15,6 +15,15 @@ const LoginScreen = ({ navigation }) => {
   const [username, setInputUsername] = useState("");
   const [password, setInputPassword] = useState("");
 
+
+
+
+
+
+
+
+
+  
   const addProduct = () => {
     const auth = JSON.stringify({
       username: username.toLowerCase,

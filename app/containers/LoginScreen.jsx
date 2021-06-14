@@ -10,11 +10,14 @@ import {
 } from "react-native";
 import Axios from "axios";
 import { Item } from "native-base";
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faKey } from '@fortawesome/free-solid-svg-icons'
+const { width, height} = Dimensions.get("window");
 const LoginScreen = ({ navigation }) => {
   const [username, setInputUsername] = useState("");
   const [password, setInputPassword] = useState("");
-
+  
   const addProduct = () => {
     const auth = JSON.stringify({
       username: username,
@@ -48,21 +51,23 @@ const LoginScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.usernameForm}>
+      <FontAwesomeIcon icon={faUser} style={styles.iconUser} />
         <TextInput
           style={styles.TextInput}
           value={username}
           onChangeText={value => setInputUsername(value)}
           autoCapitalize="none"
-          placeholder="username"
+          
         ></TextInput>
       </View>
 
       <View style={styles.passwordForm}>
+      <FontAwesomeIcon icon={faKey} style={styles.iconUser} />
         <TextInput
           style={styles.TextInput}
           value={password}
           onChangeText={value => setInputPassword(value)}
-          placeholder="password"
+        
           autoCapitalize="none"
           secureTextEntry={true}
         ></TextInput>
@@ -93,7 +98,13 @@ const styles = StyleSheet.create({
   loginTextContainer: {
     marginBottom: 80,
     marginTop: 10,
-    borderRadius: 5
+    borderRadius: 5,
+    width: width
+
+  },
+  iconUser:{
+    marginLeft:10,
+    marginRight:10
   },
   loginText: {
     fontSize: 25,
@@ -108,7 +119,11 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     marginHorizontal: 15,
     borderRadius: 15,
-    height: 40
+    height: 40,
+    flexDirection:"row",
+    alignItems: "center",
+    alignContent: "center"
+    
   },
   passwordForm: {
     marginVertical: 25,
@@ -116,30 +131,36 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     marginHorizontal: 15,
     borderRadius: 15,
-    height: 40
+    height: 40,
+    flexDirection:"row",
+    alignItems: "center",
+    alignContent: "center"
   },
   TextInput: {
     fontSize: 20,
     marginHorizontal: 5,
-    alignContent: "center"
+    alignContent: "center",
+    width:width
   },
   loginButtonContainer: {
     position: "relative",
     alignItems: "center",
-    top: 100,
-    backgroundColor: "skyblue",
+    top: 70,
+    backgroundColor: "red",
+    color: "white",
     marginHorizontal: 100,
-    borderRadius: 3
+    borderRadius: 5,
+    padding:12
   },
   loginButtonText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "black"
+    color: "white"
   },
   registerButtonContainer: {
     position: "relative",
     alignItems: "center",
-    top: 110
+    top: 85
   },
   registerText: {
     color: "#A7ADBA"

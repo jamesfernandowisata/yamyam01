@@ -21,12 +21,12 @@ const createBP = ({ navigation, screenName }) => {
   const [name, setInputName] = useState("");
   const [value, setInputValue] = useState("");
   const [description, setInputDescription] = useState("");
-  // const [bpCountryList, setInputsetBpCountryList] = useState([]);
-  // const [bpDistrictList,setBpDistrictList] = useState([]);
-  // const [bpCityList, setBpCityList] = useState([]);
-  // const [bpRegionList, setBpRegionList] = useState([]);
+  const [bpCountryList, setInputsetBpCountryList] = useState([]);
+  const [bpDistrictList,setBpDistrictList] = useState([]);
+  const [bpCityList, setBpCityList] = useState([]);
+  const [bpRegionList, setBpRegionList] = useState([]);
 
-  // const [selectedBPCountry, setselectedBPCountry] = useState();
+  const [selectedBPCountry, setselectedBPCountry] = useState();
   
 
   const addBpartner = () => {
@@ -52,30 +52,30 @@ const createBP = ({ navigation, screenName }) => {
     //    Axios.get('http://192.168.88.233:5000/api/v1/products').then(response=>{console.log(response.data)}) ;
   };
 
-  // const getBpLocation = () => {
-  //   Axios.get("http://178.128.30.185:5000/api/v1/countries ")
-  //     .then(response => {
-  //       console.log("check", response.data);
-  //       setUOM(response.data.data);
-  //     })
-  //     .catch(error => {
-  //       console.log(JSON.stringify(error));
-  //     });
+  const getBpLocation = () => {
+    Axios.get("http://178.128.30.185:5000/api/v1/countries ")
+      .then(response => {
+        console.log("check", response.data);
+        setUOM(response.data.data);
+      })
+      .catch(error => {
+        console.log(JSON.stringify(error));
+      });
 
-  //     Axios.get("http://178.128.30.185:5000/api/v1/uoms ")
-  //     .then(response => {
-  //       console.log("check", response.data);
-  //       setUOM(response.data.data);
-  //     })
-  //     .catch(error => {
-  //       console.log(JSON.stringify(error));
-  //     });
+      Axios.get("http://178.128.30.185:5000/api/v1/uoms ")
+      .then(response => {
+        console.log("check", response.data);
+        setUOM(response.data.data);
+      })
+      .catch(error => {
+        console.log(JSON.stringify(error));
+      });
 
-  // };
+  };
 
-  // useEffect(() => {
-  //   getBpLocation();
-  // }, []);
+  useEffect(() => {
+    getBpLocation();
+  }, []);
 
 
 
@@ -118,7 +118,7 @@ const createBP = ({ navigation, screenName }) => {
             ></TextInput>
           </View>
           
-            {/* <View style={styles.textContainer}>
+            <View style={styles.textContainer}>
             <text>Location</text>
             <View style={styles.pickerInput}>
               <Picker
@@ -142,7 +142,7 @@ const createBP = ({ navigation, screenName }) => {
 
             
 
-          </View>  */}
+          </View> 
         </View>
       </ScrollView>
       <View style={styles.footer}></View>
