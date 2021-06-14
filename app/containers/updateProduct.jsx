@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   SafeAreaView
 } from "react-native";
+
 import Axios from "axios";
+import { Item } from "native-base";
 
 function updateProduct({ navigation }) {
   const addProduct = () => {
@@ -41,14 +43,11 @@ function updateProduct({ navigation }) {
     //    Axios.get('http://192.168.88.233:5000/api/v1/products').then(response=>{console.log(response.data)}) ;
   };
 
-
-
   // const [uomList,setUomList]= useState();
 
-
-// useEffect(() =>{
-//   getUOMSymbol();
-// },[])
+  // useEffect(() =>{
+  //   getUOMSymbol();
+  // },[])
 
   // const getUOMSymbol = () => {
   //   Axios.get(`http://178.128.30.185:5000/api/v1/uoms/${c_uom_id}`, {
@@ -63,18 +62,13 @@ function updateProduct({ navigation }) {
   //     });
   // };
 
-  
+  useEffect(() => {
+    setUOMSymbol();
+  }, []);
 
-
-  useEffect(()=>{
-    
-    setUOMSymbol()
-  },[])
-
-const [uomSymbol,setUOMSymbol2]=useState("tesaja");
-  const setUOMSymbol=()=>{
-    
-    Axios.get(`http://178.128.30.185:5000/api/v1/uoms/${c_uom_id}`,{
+  const [uomSymbol, setUOMSymbol2] = useState("tesaja");
+  const setUOMSymbol = () => {
+    Axios.get(`http://178.128.30.185:5000/api/v1/uoms/${c_uom_id}`, {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => {
@@ -84,14 +78,11 @@ const [uomSymbol,setUOMSymbol2]=useState("tesaja");
         //console.log(x);
         setUOMSymbol2(response.data.data[0].symbol);
         console.log(uomSymbol);
-
       })
       .catch(error => {
         console.log(JSON.stringify(error));
       });
-  }
-
-
+  };
 
   const deleteProduct = () => {
     const product = JSON.stringify({
@@ -165,13 +156,22 @@ const [uomSymbol,setUOMSymbol2]=useState("tesaja");
           {/* <Text style={styles.text}>Description</Text> */}
           <TextInput
             style={styles.textInput}
+            value={uomSymbol}
+            editable={false}
+            selectTextOnFocus={false}
+          ></TextInput>
+        </View>
+
+        <View style={styles.textContainer}>
+          {/* <Text style={styles.text}>Description</Text> */}
+          <TextInput
+            style={styles.textInput}
             value={price}
             onChangeText={value => setInputPrice(value)}
             placeholder="Price"
           ></TextInput>
         </View>
 
-        
         <View style={styles.textContainer}>
           {/* <Text style={styles.text}>Description</Text> */}
           <TextInput

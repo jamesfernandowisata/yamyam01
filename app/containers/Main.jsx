@@ -80,9 +80,9 @@ const Main = ({ navigation, screenName }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <View style={styles.header}>
+        <SafeAreaView style={styles.header}>
           <Text style={styles.headerText}>Product</Text>
-        </View>
+        </SafeAreaView>
 
         <View style={styles.inputForm}>
           <View style={styles.textContainer}>

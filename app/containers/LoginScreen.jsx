@@ -25,7 +25,7 @@ const LoginScreen = ({ navigation }) => {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => {
-        console.log("checking response", response);
+        //console.log("checking response", response);
         if (response.status === 200) {
           navigation.navigate("App");
         } else {

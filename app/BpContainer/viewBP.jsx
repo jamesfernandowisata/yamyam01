@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderBottomWidth: 10,
     borderBottomColor: "#00CFE6",
-    paddingTop: 20,
-    paddingBottom: 20
+    paddingVertical: 20,
+    marginTop: "7%"
   },
   productContainer: {
     // flex: 1,

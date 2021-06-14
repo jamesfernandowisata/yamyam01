@@ -5,9 +5,11 @@ import {
   StyleSheet,
   TextInput,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  SafeAreaView
 } from "react-native";
 import Axios from "axios";
+//import { SafeAreaView } from "react-navigation";
 
 function updateBP({ navigation }) {
   const addBP = () => {
@@ -75,10 +77,10 @@ function updateBP({ navigation }) {
   const [m_partners_id] = useState(navigation.getParam("m_partners_id"));
 
   return (
-    <View style={styles.updateView}>
-      <View style={styles.header}>
+    <SafeAreaView style={styles.updateView}>
+      <SafeAreaView style={styles.header}>
         <Text style={styles.headerText}>Partners</Text>
-      </View>
+      </SafeAreaView>
       <View style={styles.inputForm}>
         <View style={styles.textContainer}>
           {/* <Text style={styles.text}>Name</Text> */}
@@ -109,16 +111,6 @@ function updateBP({ navigation }) {
             placeholder="Description"
           ></TextInput>
         </View>
-        {/* 
-        <View style={styles.textContainer}>
-        <Text style={styles.text}>Description</Text> 
-          <TextInput
-            style={styles.textInput}
-            value={price}
-            onChangeText={value => setInputDescription(value)}
-            placeholder="Price"
-          ></TextInput>
-        </View> */}
 
         <TouchableOpacity onPress={addBP} style={styles.addButton}>
           <Text style={styles.addButtonText}>UPDATE</Text>
@@ -127,13 +119,14 @@ function updateBP({ navigation }) {
           <Text style={styles.addButtonText}>DELETE</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   updateView: {
-    flex: 1
+    flex: 1,
+    marginTop: "7%"
   },
   addButtonText: {
     fontSize: 30,
