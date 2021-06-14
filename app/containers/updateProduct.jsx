@@ -13,27 +13,6 @@ import Axios from "axios";
 import { Item } from "native-base";
 
 function updateProduct({ navigation }) {
-  useEffect(() => {
-    setUOMSymbol();
-  }, []);
-
-  const [uomSymbol, setUOMSymbol2] = useState([]);
-  const setUOMSymbol = () => {
-    Axios.get(`http://178.128.30.185:5000/api/v1/uoms`, {
-      headers: { "Content-Type": "application/json" }
-    })
-      .then(response => {
-        console.log("checking uom symbol", response.data.data);
-        // setUOMSymbol2(KG);
-        setUOMSymbol2(response.data.symbol);
-
-        console.log(uomSymbol);
-      })
-      .catch(error => {
-        console.log(JSON.stringify(error));
-      });
-  };
-
   const addProduct = () => {
     const product = JSON.stringify({
       name: name,
@@ -177,7 +156,7 @@ function updateProduct({ navigation }) {
           {/* <Text style={styles.text}>Description</Text> */}
           <TextInput
             style={styles.textInput}
-            //value={uomSymbol}
+            value={uomSymbol}
             editable={false}
             selectTextOnFocus={false}
           ></TextInput>
