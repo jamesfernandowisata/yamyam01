@@ -9,12 +9,12 @@ import {
   Dimensions,
   ScrollView,
   FlatList,
-  Card
+  Card,
+  RefreshControl,
+  ToastAndroid,
 } from "react-native";
 import Axios from "axios";
 import { SafeAreaView } from "react-navigation";
-//import Swipeout from 'react-native-swipeout';
-
 
 const { width, height } = Dimensions.get("window");
 const viewProduct = ({ navigation }) => {
@@ -26,10 +26,16 @@ const viewProduct = ({ navigation }) => {
     getProduct();
   }, []);
 
-  const getProduct = () => {
-    Axios.get("http://178.128.30.185:5000/api/v1/products")
-      .then(response => {
-        console.log("check", response.data);
+  useEffect(() => {
+    getMoreProduct();
+  }, [page]);
+
+  const getProduct = (refresh) => {
+    if (refresh) {
+      setFetchMore(true);
+    }
+    Axios.get(`http://178.128.30.185:5000/api/v1/products?page=${page}&limit=8`)
+      .then((response) => {
         setProductList(response.data.data);
       })
       .catch((error) => {
@@ -43,7 +49,7 @@ const viewProduct = ({ navigation }) => {
     console.log(page);
     if (fetchMore) {
       Axios.get(
-        `http://192.168.88.152:5000/api/v1/products?page=${page}&limit=8`
+        `http://178.128.30.185:5000/api/v1/products?page=${page}&limit=8`
       )
         .then((response) => {
           if (response.data.isMaxPage) {
@@ -59,21 +65,18 @@ const viewProduct = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1 }}>
-        <View style={styles.headerContainer}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>YamYam!</Text>
-          </View>
-          {/* <Button
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>YamYam!</Text>
+      </View>
+      {/* <Button
             onPress={() => navigation.navigate("Create")}
             title="Learn More"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           /> */}
-        </View>
-        {/* 
-        {productList.map(products => (
+
+      {/* {productList.map(products => (
         <View key={products.m_product_id}>
         <TouchableOpacity
             onPress={() => navigation.navigate("Detail", products)}
@@ -83,26 +86,34 @@ const viewProduct = ({ navigation }) => {
               <Text style={styles.Subtitle}>{products.description}</Text>
             </View>
           </TouchableOpacity>
-        </View>  
+        </View>
+          
         ))} */}
+      {/* <SafeAreaView style={{ backgroundColor: "red" }}> */}
+      <FlatList
+        data={productList}
+        onEndReachedThreshold={0.01}
+        onEndReached={() => setPage(page + 1)}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={() => getProduct(true)}
+          />
+        }
+        renderItem={({ item, m_product_id }) => (
+          <TouchableOpacity
+            style={styles.productContainer}
+            onPress={() => navigation.navigate("Detail", item)}
+          >
+            <Text>{item.name}</Text>
+            <Text style={styles.Subtitle}>{item.description}</Text>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      ></FlatList>
+      {/* </SafeAreaView> */}
 
-        <FlatList
-          data={productList}
-          renderItem={({ item, m_product_id }) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Detail", item)}
-            >
-              <View style={styles.productContainer}>
-                <Text>{item.name}</Text>
-                <Text style={styles.Subtitle}>{item.description}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        ></FlatList>
-
-        <View style={styles.footer}></View>
-      </View>
+      {/* <View style={styles.footer}></View> */}
       <TouchableOpacity
         onPress={() => navigation.navigate("Create")}
         style={styles.addButton}
@@ -114,9 +125,6 @@ const viewProduct = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
   header: {
     backgroundColor: "#ffffff",
     alignItems: "center",
@@ -124,7 +132,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 10,
     borderBottomColor: "#00CFE6",
     marginTop: "7%",
-    paddingVertical: 20
+    paddingVertical: 20,
   },
   productContainer: {
     // flex: 1,

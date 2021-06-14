@@ -176,8 +176,9 @@ const [uomSymbol,setUOMSymbol2]=useState("tesaja");
           {/* <Text style={styles.text}>Description</Text> */}
           <TextInput
             style={styles.textInput}
+            editable ={false}
             value={uomSymbol}
-            onChangeText={value => setInputPrice(value)}
+            //onChangeText={value => setInputPrice(value)}
             placeholder="Price"
           ></TextInput>
         </View>
