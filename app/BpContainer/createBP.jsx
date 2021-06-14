@@ -7,12 +7,15 @@ import {
   TouchableOpacity,
   Button,
   ScrollView,
-  SafeAreaView
+  SafeAreaView,
+  Dimensions
 } from "react-native";
 import Axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 
 import { getPixelSizeForLayoutSize } from "react-native/Libraries/Utilities/PixelRatio";
+
+const { width, height } = Dimensions.get("window");
 
 const createBP = ({ navigation, screenName }) => {
   const [name, setInputName] = useState("");
@@ -28,7 +31,7 @@ const createBP = ({ navigation, screenName }) => {
       description: description
     });
 
-    Axios.post("http://192.168.88.152:5000/api/v1/partners", partners, {
+    Axios.post("http://178.128.30.185:5000/api/v1/partners", partners, {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => {
@@ -199,11 +202,12 @@ const styles = StyleSheet.create({
     height: 50
   },
   addButton: {
+    width: width * 0.3,
+    height: height * 0.1,
     position: "absolute",
-    bottom: 30,
+    marginTop: height * 0.7,
     backgroundColor: "#21272b",
-    width: 160,
-    height: 80,
+    marginVertical: height * 0.01,
     borderRadius: 10,
     alignSelf: "center",
     alignItems: "center",

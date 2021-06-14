@@ -8,9 +8,32 @@ import {
   TouchableOpacity,
   SafeAreaView
 } from "react-native";
+
 import Axios from "axios";
+import { Item } from "native-base";
 
 function updateProduct({ navigation }) {
+  useEffect(() => {
+    setUOMSymbol();
+  }, []);
+
+  const [uomSymbol, setUOMSymbol2] = useState([]);
+  const setUOMSymbol = () => {
+    Axios.get(`http://178.128.30.185:5000/api/v1/uoms`, {
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(response => {
+        console.log("checking uom symbol", response.data.data);
+        // setUOMSymbol2(KG);
+        setUOMSymbol2(response.data.symbol);
+
+        console.log(uomSymbol);
+      })
+      .catch(error => {
+        console.log(JSON.stringify(error));
+      });
+  };
+
   const addProduct = () => {
     const product = JSON.stringify({
       name: name,
@@ -20,7 +43,7 @@ function updateProduct({ navigation }) {
     });
 
     Axios.put(
-      `http://192.168.88.152:5000/api/v1/products/${m_product_id}`,
+      `http://178.128.30.185:5000/api/v1/products/${m_product_id}`,
       product,
       {
         headers: { "Content-Type": "application/json" }
@@ -48,7 +71,7 @@ function updateProduct({ navigation }) {
       price: parseInt(price)
     });
 
-    Axios.delete(`http://192.168.88.152:5000/api/v1/products/${m_product_id}`, {
+    Axios.delete(`http://178.128.30.185:5000/api/v1/products/${m_product_id}`, {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => {
@@ -71,7 +94,6 @@ function updateProduct({ navigation }) {
   const [price, setInputPrice] = useState(navigation.getParam("price"));
   const [value, setInputValue] = useState(navigation.getParam("value"));
   const [m_product_id] = useState(navigation.getParam("m_product_id"));
-
   return (
     <SafeAreaView style={styles.updateView}>
       <SafeAreaView style={styles.header}>
@@ -105,6 +127,16 @@ function updateProduct({ navigation }) {
             value={description}
             onChangeText={value => setInputDescription(value)}
             placeholder="Description"
+          ></TextInput>
+        </View>
+
+        <View style={styles.textContainer}>
+          {/* <Text style={styles.text}>Description</Text> */}
+          <TextInput
+            style={styles.textInput}
+            //value={uomSymbol}
+            editable={false}
+            selectTextOnFocus={false}
           ></TextInput>
         </View>
 

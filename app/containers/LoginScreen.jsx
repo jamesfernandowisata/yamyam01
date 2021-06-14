@@ -21,11 +21,11 @@ const LoginScreen = ({ navigation }) => {
       password: password
     });
 
-    Axios.post("http://192.168.88.152:5000/api/v1/auth/login", auth, {
+    Axios.post("http://178.128.30.185:5000/api/v1/auth/login", auth, {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => {
-        console.log("checking response", response);
+        //console.log("checking response", response);
         if (response.status === 200) {
           navigation.navigate("App");
         } else {
@@ -41,6 +41,10 @@ const LoginScreen = ({ navigation }) => {
     <SafeAreaView style={styles.loginScreenContainer}>
       <View style={styles.loginTextContainer}>
         <Text style={styles.loginText}>Login</Text>
+      </View>
+
+      <View style={styles.textYamYamContainer}>
+        <Text style={styles.textYamYam}> YamYam!</Text>
       </View>
 
       <View style={styles.usernameForm}>
@@ -89,28 +93,35 @@ const styles = StyleSheet.create({
   loginTextContainer: {
     marginBottom: 80,
     marginTop: 10,
-    borderBottomWidth: 5,
-    borderBottomColor: "black",
     borderRadius: 5
   },
   loginText: {
-    fontSize: 40,
-    alignSelf: "center",
-    bottom: 5
+    fontSize: 25,
+    alignSelf: "flex-start",
+    marginHorizontal: 15,
+    bottom: 5,
+    color: "grey"
   },
   usernameForm: {
-    borderBottomWidth: 3,
+    marginTop: "10%",
+    borderWidth: 3,
     alignSelf: "stretch",
-    marginHorizontal: 30
+    marginHorizontal: 15,
+    borderRadius: 15,
+    height: 40
   },
   passwordForm: {
-    top: 30,
-    borderBottomWidth: 3,
+    marginVertical: 25,
+    borderWidth: 3,
     alignSelf: "stretch",
-    marginHorizontal: 30
+    marginHorizontal: 15,
+    borderRadius: 15,
+    height: 40
   },
   TextInput: {
-    fontSize: 20
+    fontSize: 20,
+    marginHorizontal: 5,
+    alignContent: "center"
   },
   loginButtonContainer: {
     position: "relative",
@@ -122,7 +133,8 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     fontSize: 18,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "black"
   },
   registerButtonContainer: {
     position: "relative",
@@ -131,6 +143,15 @@ const styles = StyleSheet.create({
   },
   registerText: {
     color: "#A7ADBA"
+  },
+  textYamYamContainer: {
+    marginVertical: 5
+  },
+  textYamYam: {
+    color: "red",
+    fontSize: 50,
+    fontWeight: "bold",
+    alignSelf: "center"
   }
 });
 

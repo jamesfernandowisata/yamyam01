@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -9,50 +9,52 @@ import {
   Alert
 } from "react-native";
 import { SafeAreaView } from "react-navigation";
-import HandleBack from "./exit";
 
 const NavigationPage = ({ navigation }) => {
-  BackHandler.addEventListener("hardwareBackPress", function() {
-    Alert.alert(
-      "Exit",
-      "are you sure want to exit?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        {
-          text: "OK",
-          onPress: () => BackHandler.exitApp()
-        }
-      ],
-      {
-        cancelable: false
-      }
-    );
-    return true;
-  });
-  // onBack = () => {
-  //   if (BackHandler.addEventListener("hardwareBackPress", () => true)) {
-  //     Alert.alert(
-  //       "Exit",
-  //       "Are you sure want tu Quit",
-  //       [
-  //         {
-  //           text: "No",
-  //           onPress: () => {},
-  //           style: "cancel"
-  //         },
-  //         { text: "Yes", onPress: () => BackHandler.exitApp() }
-  //       ],
-  //       { cancelable: false }
-  //     );
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
+  // const onBackPress = useCallback(() => {
+  //   Alert.alert("Exit the app", "Do you want to exit the app?", [
+  //     {
+  //       text: "Cancel",
+  //       style: "cancel"
+  //     },
+  //     {
+  //       text: "Exit",
+  //       onPress: () => BackHandler.exitApp()
+  //     }
+  //   ]);
+  //   return true;
+  // }, []);
+
+  // useEffect(() => {
+  //   BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+  //   return () => {
+  //     BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+  //   };
+  // }, [onBackPress]);
+
+  // BackHandler.addEventListener("hardwareBackPress", function() {
+  //   Alert.alert(
+  //     "Exit",
+  //     "are you sure want to exit?",
+  //     [
+  //       {
+  //         text: "Cancel",
+  //         onPress: () => console.log("Cancel Pressed"),
+  //         style: "cancel"
+  //       },
+  //       {
+  //         text: "OK",
+  //         onPress: () => BackHandler.exitApp()
+  //       }
+  //     ],
+  //     {
+  //       cancelable: false
+  //     }
+  //   );
+  //   return true;
+  // });
+
   return (
     //<HandleBack onBack={this.onBack}>
     <SafeAreaView style={styles.navigationContainer}>

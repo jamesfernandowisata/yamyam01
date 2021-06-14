@@ -21,8 +21,7 @@ const AppNavigator = createStackNavigator(
     Navigation: NavigationPage,
     createBP: createBP,
     updateBP: updateBP,
-    viewBP: viewBP,
-    register: RegisterScreen
+    viewBP: viewBP
   },
   {
     initialRouteName: "Navigation",
@@ -33,6 +32,7 @@ const AppNavigator = createStackNavigator(
 const AuthNavigator = createSwitchNavigator(
   {
     LoginPage: LoginScreen,
+    register: RegisterScreen,
     App: AppNavigator
   },
   { initialRouteName: "LoginPage" }

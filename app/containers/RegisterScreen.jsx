@@ -21,7 +21,7 @@ const LoginScreen = ({ navigation }) => {
       password: password
     });
 
-    Axios.post("http://192.168.88.152:5000/api/v1/auth/register", auth, {
+    Axios.post("http://178.128.30.185:5000/api/v1/auth/register", auth, {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => {
@@ -64,6 +64,13 @@ const LoginScreen = ({ navigation }) => {
         style={styles.loginButtonContainer}
       >
         <Text style={styles.loginButtonText}>Register</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate("LoginPage")}
+        style={styles.backToLogin}
+      >
+        <Text style={styles.backToLoginText}>Back to Login</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -119,6 +126,15 @@ const styles = StyleSheet.create({
   },
   registerText: {
     color: "#A7ADBA"
+  },
+  backToLogin: {
+    marginVertical: "31%",
+    position: "relative",
+    alignSelf: "center"
+  },
+  backToLoginText: {
+    color: "grey",
+    fontSize: 15
   }
 });
 
