@@ -17,17 +17,12 @@ import { getPixelSizeForLayoutSize } from "react-native/Libraries/Utilities/Pixe
 
 const { width, height } = Dimensions.get("window");
 
-const createBP = ({ navigation, screenName }) => {
+const createBP = ({ navigation }) => {
   const [name, setInputName] = useState("");
   const [value, setInputValue] = useState("");
   const [description, setInputDescription] = useState("");
-  // const [bpCountryList, setInputsetBpCountryList] = useState([]);
-  // const [bpDistrictList,setBpDistrictList] = useState([]);
-  // const [bpCityList, setBpCityList] = useState([]);
-  // const [bpRegionList, setBpRegionList] = useState([]);
-
-  // const [selectedBPCountry, setselectedBPCountry] = useState();
-  
+  const [c_partner_id,setC_partner_id] =useState("99999");
+  //const [partner,setPartner] = useState([]);
 
   const addBpartner = () => {
     const partners = JSON.stringify({
@@ -40,10 +35,11 @@ const createBP = ({ navigation, screenName }) => {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => {
-        console.log("checking response", response);
-        setInputName("");
-        setInputDescription("");
-        setInputValue("");
+        console.log(response.data.data.c_bpartner_id);
+        //setC_partner_id(response.data.data.c_bpartner_id);
+        //console.log(c_partner_id);
+        //setInputName(response.data.data.c_bpartner_id);
+        navigation.navigate("createBPLocation")
       })
       .catch(error => {
         console.log(JSON.stringify(error));
@@ -51,32 +47,6 @@ const createBP = ({ navigation, screenName }) => {
 
     //    Axios.get('http://192.168.88.233:5000/api/v1/products').then(response=>{console.log(response.data)}) ;
   };
-
-  // const getBpLocation = () => {
-  //   Axios.get("http://178.128.30.185:5000/api/v1/countries ")
-  //     .then(response => {
-  //       console.log("check", response.data);
-  //       setUOM(response.data.data);
-  //     })
-  //     .catch(error => {
-  //       console.log(JSON.stringify(error));
-  //     });
-
-  //     Axios.get("http://178.128.30.185:5000/api/v1/uoms ")
-  //     .then(response => {
-  //       console.log("check", response.data);
-  //       setUOM(response.data.data);
-  //     })
-  //     .catch(error => {
-  //       console.log(JSON.stringify(error));
-  //     });
-
-  // };
-
-  // useEffect(() => {
-  //   getBpLocation();
-  // }, []);
-
 
 
 
@@ -117,32 +87,16 @@ const createBP = ({ navigation, screenName }) => {
               placeholder="Description"
             ></TextInput>
           </View>
-          
-            {/* <View style={styles.textContainer}>
-            <text>Location</text>
-            <View style={styles.pickerInput}>
-              <Picker
-                style={styles.pickerText}
-                selectedValue={bpLocation}
-                onValueChange={(itemValue, itemIndex) =>
-                  setselectedBpLocation(itemValue)
-                }
-              >
-                {bpLocation.map(item => {
-                  return (
-                    <Picker.Item
-                      key={item.name}
-                      label={item.name}
-                      value={item.name}
-                    />
-                  );
-                })}
-              </Picker>
-            </View>
 
-            
-
-          </View>  */}
+          <View style={styles.textContainer}>
+            {/* <Text style={styles.text}>Description</Text> */}
+            <TextInput
+              style={styles.textInput}
+              value={c_partner_id}
+              onChangeText={value => setC_partner_id(value)}
+              placeholder="ID"
+            ></TextInput>
+          </View>
         </View>
       </ScrollView>
       <View style={styles.footer}></View>

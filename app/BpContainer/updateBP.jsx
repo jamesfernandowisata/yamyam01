@@ -72,7 +72,7 @@ function updateBP({ navigation }) {
   const [description, setInputDescription] = useState(
     navigation.getParam("description")
   );
-  //const [price, setInputPrice] = useState(navigation.getParam("price"));
+  const [price, setInputPrice] = useState(navigation.getParam("price"));
   const [value, setInputValue] = useState(navigation.getParam("value"));
   const [m_partners_id] = useState(navigation.getParam("m_partners_id"));
 

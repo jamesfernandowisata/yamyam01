@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-  Button,
-  ScrollView,
-  SafeAreaView,
-  Dimensions
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+    TouchableOpacity,
+    Button,
+    ScrollView,
+    SafeAreaView,
+    Dimensions
 } from "react-native";
 import Axios from "axios";
 import { Picker } from "@react-native-picker/picker";
@@ -17,65 +17,105 @@ import { getPixelSizeForLayoutSize } from "react-native/Libraries/Utilities/Pixe
 
 const { width, height } = Dimensions.get("window");
 
-const createBP = ({ navigation, screenName }) => {
-  const [name, setInputName] = useState("");
-  const [value, setInputValue] = useState("");
-  const [description, setInputDescription] = useState("");
-  const [bpCountryList, setInputsetBpCountryList] = useState([]);
-  const [bpDistrictList,setBpDistrictList] = useState([]);
-  const [bpCityList, setBpCityList] = useState([]);
-  const [bpRegionList, setBpRegionList] = useState([]);
+const createBPLocation = ({ navigation }) => {
+    //const [bpCountryList, setBpCountryList] = useState([]);
+    const [bpDistrictList,setBpDistrictList] = useState([]);
+   // const [bpCityList, setBpCityList] = useState([]);
+    //const [bpRegionList, setBpRegionList] = useState([]);
 
-  const [selectedBPCountry, setselectedBPCountry] = useState();
-  
+    const [selectedBPCountry, setselectedBPCountry] = useState();
+    const [selectedBPDistrict,setselectedBPDistrict] = useState();
+    const [selectedBPCity,setselectedBPCity] = useState();
+    const [selectedBPRegion,setselectedBPRegion] = useState();
 
-  const addBpartner = () => {
+    const [c_partners_id,setInputC_partnerID] = useState(navigation.getParam("data"));
+    const x = JSON.stringify(navigation.getParam("data"));
+    const [address,setAddress]=useState("");
+
+    useEffect(() => {
+      getCountry();
+      getRegion();
+      getCity();
+      getDistrict();
+    }, []);
+    const [bpcountrylist, setbpcountrylist] = useState([]);
+    const [selectedUOM, setSelectedCountrylist] = useState();
+
+    const [bpRegionList, setbpregionlist] = useState([]);
+    const [selectedUOM2, setSelectedRegionlist] = useState();
+
+    const [bpCityList, setbpcitylist] = useState([]);
+    const [selectedUOM3, setSelectedCitylist] = useState();
+
+    const [bpDistricList, setbpdistrictlist] = useState([]);
+    const [selectedUOM4, setSelectedDistrictlist] = useState();
+
+    const getCountry = () => {
+      Axios.get("http://178.128.30.185:5000/api/v1/countries ")
+        .then(response => {
+          console.log("check", response.data);
+          setbpcountrylist(response.data.data);
+        })
+        .catch(error => {
+          console.log(JSON.stringify(error));
+        });
+    };
+    const getRegion = () => {
+      Axios.get("http://178.128.30.185:5000/api/v1/regions ")
+        .then(response => {
+          console.log("check", response.data);
+          setbpregionlist(response.data.data);
+        })
+        .catch(error => {
+          console.log(JSON.stringify(error));
+        });
+    };
+      
+    const getCity = () => {
+      Axios.get("http://178.128.30.185:5000/api/v1/cities ")
+        .then(response => {
+          console.log("check", response.data);
+          setbpcitylist(response.data.data);
+        })
+        .catch(error => {
+          console.log(JSON.stringify(error));
+        });
+    };
+
+    const getDistrict = () => {
+      Axios.get("http://178.128.30.185:5000/api/v1/districts ")
+        .then(response => {
+          console.log("check", response.data);
+          setbpdistrictlist(response.data.data);
+        })
+        .catch(error => {
+          console.log(JSON.stringify(error));
+        });
+    };
+
+    const addBpartner = () => {
     const partners = JSON.stringify({
-      name: name,
-      value: value,
-      description: description
+        name: name,
+        value: value,
+        description: description
     });
 
     Axios.post("http://178.128.30.185:5000/api/v1/partners", partners, {
-      headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" }
     })
-      .then(response => {
+        .then(response => {
         console.log("checking response", response);
         setInputName("");
         setInputDescription("");
         setInputValue("");
-      })
-      .catch(error => {
+        })
+        .catch(error => {
         console.log(JSON.stringify(error));
-      });
+        });
 
     //    Axios.get('http://192.168.88.233:5000/api/v1/products').then(response=>{console.log(response.data)}) ;
-  };
+    };
 
-  const getBpLocation = () => {
-    Axios.get("http://178.128.30.185:5000/api/v1/countries ")
-      .then(response => {
-        console.log("check", response.data);
-        setUOM(response.data.data);
-      })
-      .catch(error => {
-        console.log(JSON.stringify(error));
-      });
-
-      Axios.get("http://178.128.30.185:5000/api/v1/uoms ")
-      .then(response => {
-        console.log("check", response.data);
-        setUOM(response.data.data);
-      })
-      .catch(error => {
-        console.log(JSON.stringify(error));
-      });
-
-  };
-
-  useEffect(() => {
-    getBpLocation();
-  }, []);
 
 
 
@@ -84,54 +124,27 @@ const createBP = ({ navigation, screenName }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.header}>
-          <Text style={styles.headerText}>BPartners</Text>
+          <Text style={styles.headerText}>BPartners Location</Text>
         </View>
 
-        <View style={styles.inputForm}>
-          <View style={styles.textContainer}>
-            {/* <Text style={styles.text}>Name</Text> */}
-            <TextInput
-              style={styles.textInput}
-              value={name}
-              onChangeText={value => setInputName(value)}
-              placeholder="Name"
-            ></TextInput>
-          </View>
-
-          <View style={styles.textContainer}>
-            {/* <Text style={styles.text}>Value</Text> */}
-            <TextInput
-              style={styles.textInput}
-              value={value}
-              onChangeText={value => setInputValue(value)}
-              placeholder="Value"
-            ></TextInput>
-          </View>
-
-          <View style={styles.textContainer}>
-            {/* <Text style={styles.text}>Description</Text> */}
-            <TextInput
-              style={styles.textInput}
-              value={description}
-              onChangeText={value => setInputDescription(value)}
-              placeholder="Description"
-            ></TextInput>
-          </View>
-          
             <View style={styles.textContainer}>
-            <text>Location</text>
+            <Text>Country</Text>
+
+          <View style={styles.textContainer}>
+            {/* <Text style={styles.text}>Price</Text> */}
             <View style={styles.pickerInput}>
               <Picker
                 style={styles.pickerText}
-                selectedValue={bpLocation}
+                selectedValue={bpcountrylist}
                 onValueChange={(itemValue, itemIndex) =>
-                  setselectedBpLocation(itemValue)
+                  setSelectedCountrylist(itemValue)
                 }
               >
-                {bpLocation.map(item => {
+                {bpcountrylist.map(item => {
+                  console.log(item);
                   return (
                     <Picker.Item
-                      key={item.name}
+                      key={item.c_country_id}
                       label={item.name}
                       value={item.name}
                     />
@@ -139,10 +152,96 @@ const createBP = ({ navigation, screenName }) => {
                 })}
               </Picker>
             </View>
+          </View>
+          <Text>Region</Text>
+          <View style={styles.textContainer}>
+            {/* <Text style={styles.text}>Price</Text> */}
+            <View style={styles.pickerInput}>
+              <Picker
+                style={styles.pickerText}
+                selectedValue={bpRegionList}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedRegionlist(itemValue)
+                }
+              >
+                {bpRegionList.map(item => {
+                  console.log(item);
+                  return (
+                    <Picker.Item
+                      key={item.c_region_id}
+                      label={item.name}
+                      value={item.name}
+                    />
+                  );
+                })}
+              </Picker>
+            </View>
+          </View>
 
-            
+          
+          <Text>City</Text>
+          <View style={styles.textContainer}>
+            {/* <Text style={styles.text}>Price</Text> */}
+            <View style={styles.pickerInput}>
+              <Picker
+                style={styles.pickerText}
+                selectedValue={bpCityList}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedCitylist(itemValue)
+                }
+              >
+                {bpCityList.map(item => {
+                  console.log(item);
+                  return (
+                    <Picker.Item
+                      key={item.c_city_id}
+                      label={item.name}
+                      value={item.name}
+                    />
+                  );
+                })}
+              </Picker>
+            </View>
+          </View>
 
-          </View> 
+          <Text>District</Text>
+          <View style={styles.textContainer}>
+            {/* <Text style={styles.text}>Price</Text> */}
+            <View style={styles.pickerInput}>
+              <Picker
+                style={styles.pickerText}
+                selectedValue={bpDistricList}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedDistrictlist(itemValue)
+                }
+              >
+                {bpDistricList.map(item => {
+                  console.log(item);
+                  return (
+                    <Picker.Item
+                      key={item.c_district_id}
+                      label={item.name}
+                      value={item.name}
+                    />
+                  );
+                })}
+              </Picker>
+            </View>
+          </View>
+
+
+
+          <View style={styles.textContainer}>
+            {/* <Text style={styles.text}>Name</Text> */}
+            <TextInput
+              style={styles.textInput}
+              value={x}
+              onChangeText={value => setInputName(value)}
+              placeholder="address"
+            ></TextInput>
+          </View>
+
+
         </View>
       </ScrollView>
       <View style={styles.footer}></View>
@@ -274,4 +373,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default createBP;
+export default createBPLocation;
