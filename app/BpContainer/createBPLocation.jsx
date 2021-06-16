@@ -18,18 +18,9 @@ import { getPixelSizeForLayoutSize } from "react-native/Libraries/Utilities/Pixe
 const { width, height } = Dimensions.get("window");
 
 const createBPLocation = ({ navigation }) => {
-    //const [bpCountryList, setBpCountryList] = useState([]);
-    const [bpDistrictList,setBpDistrictList] = useState([]);
-   // const [bpCityList, setBpCityList] = useState([]);
-    //const [bpRegionList, setBpRegionList] = useState([]);
 
-    const [selectedBPCountry, setselectedBPCountry] = useState();
-    const [selectedBPDistrict,setselectedBPDistrict] = useState();
-    const [selectedBPCity,setselectedBPCity] = useState();
-    const [selectedBPRegion,setselectedBPRegion] = useState();
-
-    const [c_partners_id,setInputC_partnerID] = useState(navigation.getParam("data"));
-    const x = JSON.stringify(navigation.getParam("data"));
+    const [bp_id,setInputC_partnerID] = useState(navigation.getParam("data"));
+   // const x = JSON.stringify(navigation.getParam("data"));
     const [address,setAddress]=useState("");
 
     useEffect(() => {
@@ -39,16 +30,16 @@ const createBPLocation = ({ navigation }) => {
       getDistrict();
     }, []);
     const [bpcountrylist, setbpcountrylist] = useState([]);
-    const [selectedUOM, setSelectedCountrylist] = useState();
+    const [selectedCountry, setSelectedCountrylist] = useState();
 
     const [bpRegionList, setbpregionlist] = useState([]);
-    const [selectedUOM2, setSelectedRegionlist] = useState();
+    const [selectedRegion, setSelectedRegionlist] = useState();
 
     const [bpCityList, setbpcitylist] = useState([]);
-    const [selectedUOM3, setSelectedCitylist] = useState();
+    const [selectedCity, setSelectedCitylist] = useState();
 
     const [bpDistricList, setbpdistrictlist] = useState([]);
-    const [selectedUOM4, setSelectedDistrictlist] = useState();
+    const [selectedDistrict, setSelectedDistrictlist] = useState();
 
     const getCountry = () => {
       Axios.get("http://178.128.30.185:5000/api/v1/countries ")
@@ -93,21 +84,23 @@ const createBPLocation = ({ navigation }) => {
         });
     };
 
-    const addBpartner = () => {
-    const partners = JSON.stringify({
-        name: name,
-        value: value,
-        description: description
-    });
+    const addBPLocation = () => {
+      const BPLocation = JSON.stringify({
+        c_country_id: selectedCountry,
+        c_region_id: selectedRegion,
+        c_city_id: selectedCity,
+        c_district_id: selectedDistrict,
+        address: address,
+        c_partner_id:bp_id
+      });
 
-    Axios.post("http://178.128.30.185:5000/api/v1/partners", partners, {
+
+    Axios.post(`http://178.128.30.185:5000/api/v1/partners/${bp_id}/locations`, BPLocation, {
         headers: { "Content-Type": "application/json" }
     })
         .then(response => {
         console.log("checking response", response);
-        setInputName("");
-        setInputDescription("");
-        setInputValue("");
+        console.log(bp_id);
         })
         .catch(error => {
         console.log(JSON.stringify(error));
@@ -146,7 +139,7 @@ const createBPLocation = ({ navigation }) => {
                     <Picker.Item
                       key={item.c_country_id}
                       label={item.name}
-                      value={item.name}
+                      value={item.c_country_id}
                     />
                   );
                 })}
@@ -170,7 +163,7 @@ const createBPLocation = ({ navigation }) => {
                     <Picker.Item
                       key={item.c_region_id}
                       label={item.name}
-                      value={item.name}
+                      value={item.c_region_id}
                     />
                   );
                 })}
@@ -196,7 +189,7 @@ const createBPLocation = ({ navigation }) => {
                     <Picker.Item
                       key={item.c_city_id}
                       label={item.name}
-                      value={item.name}
+                      value={item.c_city_id}
                     />
                   );
                 })}
@@ -221,7 +214,7 @@ const createBPLocation = ({ navigation }) => {
                     <Picker.Item
                       key={item.c_district_id}
                       label={item.name}
-                      value={item.name}
+                      value={item.c_district_id}
                     />
                   );
                 })}
@@ -235,8 +228,8 @@ const createBPLocation = ({ navigation }) => {
             {/* <Text style={styles.text}>Name</Text> */}
             <TextInput
               style={styles.textInput}
-              value={x}
-              onChangeText={value => setInputName(value)}
+              value={address}
+              onChangeText={value => setAddress(value)}
               placeholder="address"
             ></TextInput>
           </View>
@@ -245,7 +238,7 @@ const createBPLocation = ({ navigation }) => {
         </View>
       </ScrollView>
       <View style={styles.footer}></View>
-      <TouchableOpacity onPress={addBpartner} style={styles.addButton}>
+      <TouchableOpacity onPress={addBPLocation} style={styles.addButton}>
         <Text style={styles.addButtonText}>Create</Text>
       </TouchableOpacity>
     </SafeAreaView>

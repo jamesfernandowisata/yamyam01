@@ -21,7 +21,7 @@ const createBP = ({ navigation }) => {
   const [name, setInputName] = useState("");
   const [value, setInputValue] = useState("");
   const [description, setInputDescription] = useState("");
-  const [c_partner_id,setC_partner_id] =useState("99999");
+  const [c_partner_id,setC_partner_id] =useState("");
   //const [partner,setPartner] = useState([]);
 
   const addBpartner = () => {
@@ -36,10 +36,9 @@ const createBP = ({ navigation }) => {
     })
       .then(response => {
         console.log(response.data.data.c_bpartner_id);
-        //setC_partner_id(response.data.data.c_bpartner_id);
+        setC_partner_id(response.data.data.c_bpartner_id);
         //console.log(c_partner_id);
         //setInputName(response.data.data.c_bpartner_id);
-        navigation.navigate("createBPLocation")
       })
       .catch(error => {
         console.log(JSON.stringify(error));
@@ -48,7 +47,9 @@ const createBP = ({ navigation }) => {
     //    Axios.get('http://192.168.88.233:5000/api/v1/products').then(response=>{console.log(response.data)}) ;
   };
 
-
+const navigatenextpage=()=>{
+  navigation.navigate("createBPLocation",{data: c_partner_id})
+}
 
   return (
     <SafeAreaView style={styles.container}>
@@ -88,21 +89,17 @@ const createBP = ({ navigation }) => {
             ></TextInput>
           </View>
 
-          <View style={styles.textContainer}>
-            {/* <Text style={styles.text}>Description</Text> */}
-            <TextInput
-              style={styles.textInput}
-              value={c_partner_id}
-              onChangeText={value => setC_partner_id(value)}
-              placeholder="ID"
-            ></TextInput>
-          </View>
         </View>
       </ScrollView>
       <View style={styles.footer}></View>
       <TouchableOpacity onPress={addBpartner} style={styles.addButton}>
         <Text style={styles.addButtonText}>Create</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity onPress={navigatenextpage} style ={styles.registerButtonContainer} >
+        <Text style ={styles.textButton}>Add Location</Text>
+      </TouchableOpacity>
+
     </SafeAreaView>
   );
 };
@@ -122,7 +119,9 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     marginTop: "8%"
   },
-
+  textButton:{
+    color: "black"
+  },
   inputForm: {
     marginVertical: 10
   },
@@ -185,6 +184,12 @@ const styles = StyleSheet.create({
     fontSize: 23,
     borderRadius: 5,
     elevation: 3
+  },
+  registerButtonContainer: {
+    position: "relative",
+    alignItems: "center",
+    alignContent:"center",
+    bottom: 150,
   },
   pickerText: {
     alignSelf: "flex-end",
