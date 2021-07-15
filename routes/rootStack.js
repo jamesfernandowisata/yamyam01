@@ -1,18 +1,17 @@
-import React from "react";
-import { View, Text } from "react-native";
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
+
+import { createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-//import {createSwitchNavigator} from '@react-navigation/native';
-import Main from "../app/containers/Main";
-import viewProduct from "../app/containers/viewProduct";
-import updateProduct from "../app/containers/updateProduct";
-import NavigationPage from "../app/containers/NavigationPage";
-import LoginScreen from "../app/containers/LoginScreen";
-import createBP from "../app/BpContainer/createBP";
-import updateBP from "../app/BpContainer/updateBP";
-import viewBP from "../app/BpContainer/viewBP";
-import RegisterScreen from "../app/containers/RegisterScreen";
-import createBPLocation from "../app/BpContainer/createBPLocation";
+
+import Main from "../app/containers/product/Main";
+import viewProduct from "../app/containers/product/viewProduct";
+import updateProduct from "../app/containers/product/updateProduct";
+import NavigationPage from "../app/containers/Main/NavigationPage";
+import LoginScreen from "../app/containers/Main/LoginScreen";
+import createBP from "../app/containers/BpContainer/createBP";
+import updateBP from "../app/containers/BpContainer/updateBP";
+import viewBP from "../app/containers/BpContainer/viewBP";
+import RegisterScreen from "../app/containers/Main/RegisterScreen";
+import createBPLocation from "../app/containers/BpContainer/createBPLocation";
 
 
 
@@ -37,6 +36,7 @@ const AuthNavigator = createSwitchNavigator(
   {
     LoginPage: LoginScreen,
     register: RegisterScreen,
+    //Navigation: NavigationPage,
     App: AppNavigator
   },
   { initialRouteName: "LoginPage" }

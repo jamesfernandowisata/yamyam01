@@ -11,9 +11,6 @@ import {
   Dimensions
 } from "react-native";
 import Axios from "axios";
-import { Picker } from "@react-native-picker/picker";
-
-import { getPixelSizeForLayoutSize } from "react-native/Libraries/Utilities/PixelRatio";
 
 const { width, height } = Dimensions.get("window");
 
@@ -39,6 +36,7 @@ const createBP = ({ navigation }) => {
         setC_partner_id(response.data.data.c_bpartner_id);
         //console.log(c_partner_id);
         //setInputName(response.data.data.c_bpartner_id);
+        navigation.navigate("createBPLocation",{data: c_partner_id})
       })
       .catch(error => {
         console.log(JSON.stringify(error));

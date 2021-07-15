@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet, Text, View } from "react-native";
-import Main from "./app/containers/Main";
+//import Main from "./app/containers/Main";
 import AuthNavigator from "./routes/rootStack";
 import { createAppContainer } from "react-navigation";
 // import { createBottomTabNavigator } from 'react-navigation-tabs';

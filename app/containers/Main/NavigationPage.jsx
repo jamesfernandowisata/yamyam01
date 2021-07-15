@@ -78,9 +78,6 @@ const NavigationPage = ({ navigation }) => {
         <Text style={styles.textButton}>Order</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.orderLineContainer}>
-        <Text style={styles.textButton}>OrderLine</Text>
-      </TouchableOpacity>
     </SafeAreaView>
     //</HandleBack>
   );

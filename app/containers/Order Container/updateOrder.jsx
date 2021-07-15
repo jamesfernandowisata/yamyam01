@@ -8,22 +8,20 @@ import {
   TouchableOpacity,
   SafeAreaView
 } from "react-native";
-
 import Axios from "axios";
-import { Item } from "native-base";
+//import { SafeAreaView } from "react-navigation";
 
-function updateProduct({ navigation }) {
-  const addProduct = () => {
+function updateBP({ navigation }) {
+  const addBP = () => {
     const product = JSON.stringify({
       name: name,
       value: value,
-      description: description,
-      price: parseInt(price),
-      c_uom_id: c_uom_id
+      description: description
+      //price: parseInt(price)
     });
 
     Axios.put(
-      `http://178.128.30.185:5000/api/v1/products/${m_product_id}`,
+      `http://178.128.30.185:5000/api/v1/partners/${m_partners_id}`,
       product,
       {
         headers: { "Content-Type": "application/json" }
@@ -33,7 +31,7 @@ function updateProduct({ navigation }) {
         console.log("checking response", response);
         setInputName("");
         setInputDescription("");
-        setInputPrice("");
+        //setInputPrice("");
         setInputValue("");
       })
       .catch(error => {
@@ -43,48 +41,7 @@ function updateProduct({ navigation }) {
     //    Axios.get('http://192.168.88.233:5000/api/v1/products').then(response=>{console.log(response.data)}) ;
   };
 
-  // const [uomList,setUomList]= useState();
-
-  // useEffect(() =>{
-  //   getUOMSymbol();
-  // },[])
-
-  // const getUOMSymbol = () => {
-  //   Axios.get(`http://178.128.30.185:5000/api/v1/uoms/${c_uom_id}`, {
-  //     headers: { "Content-Type": "application/json" }
-  //   })
-  //     .then(response => {
-  //       console.log("checking uom symbol", respons.data.symbol);
-  //       setUOMSymbol(response.data.symbol);
-  //     })
-  //     .catch(error => {
-  //       console.log(JSON.stringify(error));
-  //     });
-  // };
-
-  useEffect(() => {
-    setUOMSymbol();
-  }, []);
-
-  const [uomSymbol, setUOMSymbol2] = useState("tesaja");
-  const setUOMSymbol = () => {
-    Axios.get(`http://178.128.30.185:5000/api/v1/uoms/${c_uom_id}`, {
-      headers: { "Content-Type": "application/json" }
-    })
-      .then(response => {
-        console.log("checking uom symbol", response.data.data[0].symbol);
-        // setUOMSymbol2(KG);
-        //x =response.data.data[0].symbol;
-        //console.log(x);
-        setUOMSymbol2(response.data.data[0].symbol);
-        console.log(uomSymbol);
-      })
-      .catch(error => {
-        console.log(JSON.stringify(error));
-      });
-  };
-
-  const deleteProduct = () => {
+  const deleteBP = () => {
     const product = JSON.stringify({
       name: name,
       value: value,
@@ -92,14 +49,17 @@ function updateProduct({ navigation }) {
       price: parseInt(price)
     });
 
-    Axios.delete(`http://178.128.30.185:5000/api/v1/products/${m_product_id}`, {
-      headers: { "Content-Type": "application/json" }
-    })
+    Axios.delete(
+      `http://192.168.88.152:5000/api/v1/partners/${m_partners_id}`,
+      {
+        headers: { "Content-Type": "application/json" }
+      }
+    )
       .then(response => {
         console.log("checking response", response);
         setInputName("");
         setInputDescription("");
-        setInputPrice("");
+        //setInputPrice("");
         setInputValue("");
       })
       .catch(error => {
@@ -114,12 +74,12 @@ function updateProduct({ navigation }) {
   );
   const [price, setInputPrice] = useState(navigation.getParam("price"));
   const [value, setInputValue] = useState(navigation.getParam("value"));
-  const [m_product_id] = useState(navigation.getParam("m_product_id"));
-  const [c_uom_id] = useState(navigation.getParam("c_uom_id"));
+  const [m_partners_id] = useState(navigation.getParam("m_partners_id"));
+
   return (
     <SafeAreaView style={styles.updateView}>
       <SafeAreaView style={styles.header}>
-        <Text style={styles.headerText}>Product</Text>
+        <Text style={styles.headerText}>Partners</Text>
       </SafeAreaView>
       <View style={styles.inputForm}>
         <View style={styles.textContainer}>
@@ -147,46 +107,15 @@ function updateProduct({ navigation }) {
           <TextInput
             style={styles.textInput}
             value={description}
-            onChangeText={value => setInputValue(value)}
+            onChangeText={value => setInputDescription(value)}
             placeholder="Description"
           ></TextInput>
         </View>
 
-        <View style={styles.textContainer}>
-          {/* <Text style={styles.text}>Description</Text> */}
-          <TextInput
-            style={styles.textInput}
-            value={uomSymbol}
-            editable={false}
-            selectTextOnFocus={false}
-          ></TextInput>
-        </View>
-
-        <View style={styles.textContainer}>
-          {/* <Text style={styles.text}>Description</Text> */}
-          <TextInput
-            style={styles.textInput}
-            value={price}
-            onChangeText={value => setInputPrice(value)}
-            placeholder="Price"
-          ></TextInput>
-        </View>
-
-        <View style={styles.textContainer}>
-          {/* <Text style={styles.text}>Description</Text> */}
-          <TextInput
-            style={styles.textInput}
-            editable ={false}
-            value={uomSymbol}
-            //onChangeText={value => setInputPrice(value)}
-            placeholder="Price"
-          ></TextInput>
-        </View>
-
-        <TouchableOpacity onPress={addProduct} style={styles.addButton}>
+        <TouchableOpacity onPress={addBP} style={styles.addButton}>
           <Text style={styles.addButtonText}>UPDATE</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={deleteProduct} style={styles.deleteButton}>
+        <TouchableOpacity onPress={deleteBP} style={styles.deleteButton}>
           <Text style={styles.addButtonText}>DELETE</Text>
         </TouchableOpacity>
       </View>
@@ -285,4 +214,4 @@ const styles = StyleSheet.create({
   // }
 });
 
-export default updateProduct;
+export default updateBP;
