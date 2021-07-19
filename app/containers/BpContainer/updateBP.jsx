@@ -33,6 +33,7 @@ function updateBP({ navigation }) {
         setInputDescription("");
         //setInputPrice("");
         setInputValue("");
+        navigation.navigate("updateBPLocation",{data: m_partners_id})
       })
       .catch(error => {
         console.log(JSON.stringify(error));
@@ -72,7 +73,7 @@ function updateBP({ navigation }) {
   const [description, setInputDescription] = useState(
     navigation.getParam("description")
   );
-  const [price, setInputPrice] = useState(navigation.getParam("price"));
+  //const [price, setInputPrice] = useState(navigation.getParam("price"));
   const [value, setInputValue] = useState(navigation.getParam("value"));
   const [m_partners_id] = useState(navigation.getParam("m_partners_id"));
 
@@ -97,7 +98,7 @@ function updateBP({ navigation }) {
           <TextInput
             style={styles.textInput}
             value={value}
-            onChangeText={value => setInputDescription(value)}
+            onChangeText={value => setInputValue(value)}
             placeholder="Value"
           ></TextInput>
         </View>

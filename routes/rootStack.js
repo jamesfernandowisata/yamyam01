@@ -12,7 +12,7 @@ import updateBP from "../app/containers/BpContainer/updateBP";
 import viewBP from "../app/containers/BpContainer/viewBP";
 import RegisterScreen from "../app/containers/Main/RegisterScreen";
 import createBPLocation from "../app/containers/BpContainer/createBPLocation";
-
+import updateBPLocation from "../app/containers/BpContainer/updateBPLocation";
 
 
 const AppNavigator = createStackNavigator(
@@ -25,6 +25,7 @@ const AppNavigator = createStackNavigator(
     updateBP: updateBP,
     viewBP: viewBP,
     createBPLocation: createBPLocation,
+    updateBPLocation : updateBPLocation
   },
   {
     initialRouteName: "Navigation",

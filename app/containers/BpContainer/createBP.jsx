@@ -94,10 +94,6 @@ const navigatenextpage=()=>{
         <Text style={styles.addButtonText}>Create</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={navigatenextpage} style ={styles.registerButtonContainer} >
-        <Text style ={styles.textButton}>Add Location</Text>
-      </TouchableOpacity>
-
     </SafeAreaView>
   );
 };

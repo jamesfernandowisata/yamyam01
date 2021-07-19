@@ -137,7 +137,7 @@ function updateProduct({ navigation }) {
           <TextInput
             style={styles.textInput}
             value={value}
-            onChangeText={value => setInputDescription(value)}
+            onChangeText={value => setInputValue(value)}
             placeholder="Value"
           ></TextInput>
         </View>
@@ -147,7 +147,7 @@ function updateProduct({ navigation }) {
           <TextInput
             style={styles.textInput}
             value={description}
-            onChangeText={value => setInputValue(value)}
+            onChangeText={value => setInputDescription(value)}
             placeholder="Description"
           ></TextInput>
         </View>
