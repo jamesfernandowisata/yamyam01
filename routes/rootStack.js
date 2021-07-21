@@ -13,6 +13,11 @@ import viewBP from "../app/containers/BpContainer/viewBP";
 import RegisterScreen from "../app/containers/Main/RegisterScreen";
 import createBPLocation from "../app/containers/BpContainer/createBPLocation";
 import updateBPLocation from "../app/containers/BpContainer/updateBPLocation";
+import createOrder from "../app/containers/OrdeContainer/createOrder";
+import createOrderLine from "../app/containers/OrdeContainer/createOrderLine"
+import updateOrder from "../app/containers/OrdeContainer/updateOrder";
+import viewOrderLine from "../app/containers/OrdeContainer/viewOrderLine";
+import viewOrder from "../app/containers/OrderContainer/viewOrder";
 
 
 const AppNavigator = createStackNavigator(

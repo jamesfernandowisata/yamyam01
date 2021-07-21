@@ -6,6 +6,7 @@ import {
   TextInput,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
   SafeAreaView
 } from "react-native";
 import Axios from "axios";
@@ -26,8 +27,8 @@ function updateBP({ navigation }) {
         c_region_id: selectedRegion,
         c_city_id: selectedCity,
         c_district_id: selectedDistrict,
-        address: selectAddress,
-        c_partner_id:bp_id
+        address: address,
+        c_partner_id:m_partners_id
       //price: parseInt(price)
     });
 
@@ -120,102 +121,139 @@ function updateBP({ navigation }) {
 
 
   return (
-    <SafeAreaView style={styles.updateView}>
-      <SafeAreaView style={styles.header}>
-        <Text style={styles.headerText}>Partners Location</Text>
-      </SafeAreaView>
-      <View style={styles.inputForm}>
-      <View style={styles.pickerInput}>
-              <Picker
-                style={styles.pickerText}
-                selectedValue={bpRegionList}
-                placeholder={current_region}
-                onValueChange={(itemValue, itemIndex) =>
-                  setSelectedRegionlist(itemValue)
-                }
-              >
-                {bpRegionList.map(item => {
-                  console.log(item);
-                  return (
-                    <Picker.Item
-                      key={item.c_region_id}
-                      label={item.name}
-                      value={item.c_region_id}
-                    />
-                  );
-                })}
-              </Picker>
-            </View>
-
-            
-      <Text>City</Text>
-          <View style={styles.textContainer}>
-            {/* <Text style={styles.text}>Price</Text> */}
-            <View style={styles.pickerInput}>
-              <Picker
-                style={styles.pickerText}
-                selectedValue={bpCityList}
-                placeholder={current_city}
-                onValueChange={(itemValue, itemIndex) =>
-                  setSelectedCitylist(itemValue)
-                }
-              >
-                {bpCityList.map(item => {
-                  console.log(item);
-                  return (
-                    <Picker.Item
-                      key={item.c_city_id}
-                      label={item.name}
-                      value={item.c_city_id}
-                    />
-                  );
-                })}
-              </Picker>
-            </View>
-          </View>
-          <Text>District</Text>
-          <View style={styles.textContainer}>
-            {/* <Text style={styles.text}>Price</Text> */}
-            <View style={styles.pickerInput}>
-              <Picker
-                style={styles.pickerText}
-                selectedValue={bpDistricList}
-                placeholder={current_region}
-                onValueChange={(itemValue, itemIndex) =>
-                  setSelectedDistrictlist(itemValue)
-                }
-              >
-                {bpDistricList.map(item => {
-                  console.log(item);
-                  return (
-                    <Picker.Item
-                      key={item.c_district_id}
-                      label={item.name}
-                      value={item.c_district_id}
-                    />
-                  );
-                })}
-              </Picker>
-            </View>
-          </View>
-
-
-
-          <View style={styles.textContainer}>
-            {/* <Text style={styles.text}>Name</Text> */}
-            <TextInput
-              style={styles.textInput}
-              value={address}
-              onChangeText={value => setAddress(value)}
-              placeholder={current_address}
-            ></TextInput>
-          </View>
-
-        <TouchableOpacity onPress={addBP} style={styles.addButton}>
-          <Text style={styles.addButtonText}>UPDATE</Text>
-        </TouchableOpacity>
+    <SafeAreaView style={styles.container}>
+    <ScrollView>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>BPartners Location</Text>
       </View>
-    </SafeAreaView>
+
+          <View style={styles.textContainer}>
+          <Text>Country</Text>
+
+        <View style={styles.textContainer}>
+          {/* <Text style={styles.text}>Price</Text> */}
+          <View style={styles.pickerInput}>
+            <Picker
+              style={styles.pickerText}
+              selectedValue={bpcountrylist}
+              placeholder={current_country}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedCountrylist(itemValue)
+              }
+            >
+              {bpcountrylist.map(item => {
+                console.log(item);
+                return (
+                  <Picker.Item
+                    key={item.c_country_id}
+                    label={item.name}
+                    value={item.c_country_id}
+                  />
+                );
+              })}
+            </Picker>
+          </View>
+        </View>
+        <Text>Region</Text>
+        <View style={styles.textContainer}>
+          {/* <Text style={styles.text}>Price</Text> */}
+          <View style={styles.pickerInput}>
+            <Picker
+              style={styles.pickerText}
+              selectedValue={bpRegionList}
+              placeholder={current_region}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedRegionlist(itemValue)
+              }
+            >
+              {bpRegionList.map(item => {
+                console.log(item);
+                return (
+                  <Picker.Item
+                    key={item.c_region_id}
+                    label={item.name}
+                    value={item.c_region_id}
+                  />
+                );
+              })}
+            </Picker>
+          </View>
+        </View>
+
+        
+        <Text>City</Text>
+        <View style={styles.textContainer}>
+          {/* <Text style={styles.text}>Price</Text> */}
+          <View style={styles.pickerInput}>
+            <Picker
+              style={styles.pickerText}
+              selectedValue={bpCityList}
+              placeholder={current_city}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedCitylist(itemValue)
+              }
+            >
+              {bpCityList.map(item => {
+                console.log(item);
+                return (
+                  <Picker.Item
+                    key={item.c_city_id}
+                    label={item.name}
+                    value={item.c_city_id}
+                  />
+                );
+              })}
+            </Picker>
+          </View>
+        </View>
+
+        <Text>District</Text>
+        <View style={styles.textContainer}>
+          {/* <Text style={styles.text}>Price</Text> */}
+          <View style={styles.pickerInput}>
+            <Picker
+              style={styles.pickerText}
+              selectedValue={bpDistricList}
+              placeholder={current_district}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedDistrictlist(itemValue)
+              }
+            >
+              {bpDistricList.map(item => {
+                console.log(item);
+                return (
+                  <Picker.Item
+                    key={item.c_district_id}
+                    label={item.name}
+                    value={item.c_district_id}
+                  />
+                );
+              })}
+            </Picker>
+          </View>
+        </View>
+
+
+
+        <View style={styles.textContainer}>
+          {/* <Text style={styles.text}>Name</Text> */}
+          <TextInput
+            style={styles.textInput}
+            value={address}
+            placeholder={current_address}
+            onChangeText={value => setAddress(value)}
+            placeholder="address"
+          ></TextInput>
+        </View>
+
+
+      </View>
+    </ScrollView>
+    <View style={styles.footer}></View>
+    <TouchableOpacity onPress={addBP} style={styles.addButton}>
+      <Text style={styles.addButtonText}>UPDATE</Text>
+    </TouchableOpacity>
+  </SafeAreaView>
   );
 }
 

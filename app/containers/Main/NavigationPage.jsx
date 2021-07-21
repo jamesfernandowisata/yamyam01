@@ -74,7 +74,10 @@ const NavigationPage = ({ navigation }) => {
         <Text style={styles.textButton}>BPartner</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.orderContainer}>
+      <TouchableOpacity style={styles.orderContainer}
+        onPress={() => navigation.navigate("viewBP")}
+        style={styles.orderContainer}
+      >
         <Text style={styles.textButton}>Order</Text>
       </TouchableOpacity>
 
@@ -90,7 +93,7 @@ const styles = StyleSheet.create({
   productContainer: {
     position: "absolute",
     margin: 10,
-    backgroundColor: "blue",
+    backgroundColor: "red",
     width: "30%",
     height: 70,
     elevation: 2,
@@ -100,7 +103,7 @@ const styles = StyleSheet.create({
   BpartnerContainer: {
     position: "absolute",
     margin: 10,
-    backgroundColor: "blue",
+    backgroundColor: "red",
     width: "30%",
     height: 70,
     elevation: 2,
@@ -110,7 +113,7 @@ const styles = StyleSheet.create({
   orderContainer: {
     position: "absolute",
     margin: 10,
-    backgroundColor: "blue",
+    backgroundColor: "red",
     width: "30%",
     height: 70,
     elevation: 2,
