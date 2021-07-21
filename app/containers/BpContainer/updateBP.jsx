@@ -9,6 +9,7 @@ import {
   SafeAreaView
 } from "react-native";
 import Axios from "axios";
+import { Picker } from "@react-native-picker/picker";
 //import { SafeAreaView } from "react-navigation";
 
 function updateBP({ navigation }) {
@@ -29,10 +30,10 @@ function updateBP({ navigation }) {
     )
       .then(response => {
         console.log("checking response", response);
-        setInputName("");
-        setInputDescription("");
+        //setInputName("");
+        //setInputDescription("");
         //setInputPrice("");
-        setInputValue("");
+        //setInputValue("");
         navigation.navigate("updateBPLocation",{data: m_partners_id})
       })
       .catch(error => {
@@ -75,7 +76,7 @@ function updateBP({ navigation }) {
   );
   //const [price, setInputPrice] = useState(navigation.getParam("price"));
   const [value, setInputValue] = useState(navigation.getParam("value"));
-  const [m_partners_id] = useState(navigation.getParam("m_partners_id"));
+  const [m_partners_id] = useState(navigation.getParam("c_bpartner_id"));
 
   return (
     <SafeAreaView style={styles.updateView}>

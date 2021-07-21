@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import Axios from "axios";
 import { SafeAreaView } from "react-navigation";
+import { Picker } from "@react-native-picker/picker";
 //import Swipeout from 'react-native-swipeout';
 
 const { width, height } = Dimensions.get("window");
