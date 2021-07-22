@@ -22,13 +22,13 @@ const createOrder = ({ navigation, screenName }) => {
     const [selectOrder, setSelectOrder] = useState();
 
     const addOrder = () => {
-    const partners = JSON.stringify({
+    const order = JSON.stringify({
         name: name,
         value: value,
         description: description
     });
 
-    Axios.post("http://178.128.30.185:5000/api/v1/partners", partners, {
+    Axios.post("http://178.128.30.185:5000/api/v1/orders", order, {
         headers: { "Content-Type": "application/json" }
     })
         .then(response => {
@@ -48,7 +48,7 @@ const createOrder = ({ navigation, screenName }) => {
     <SafeAreaView style={styles.container}>
         <ScrollView>
         <View style={styles.header}>
-            <Text style={styles.headerText}>BPartners</Text>
+            <Text style={styles.headerText}>Order</Text>
         </View>
 
         <View style={styles.inputForm}>

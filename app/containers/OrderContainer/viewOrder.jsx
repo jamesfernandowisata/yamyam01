@@ -1,160 +1,138 @@
 import React, { useState, useEffect } from "react";
 import {
-  View,
-  Text,
   StyleSheet,
+  Text,
   TextInput,
-  Dimensions,
+  View,
   TouchableOpacity,
-  SafeAreaView
+  Button,
+  Dimensions,
+  ScrollView,
+  FlatList,
+  Card,
+  RefreshControl,
+  ToastAndroid,
 } from "react-native";
 import Axios from "axios";
-//import { SafeAreaView } from "react-navigation";
+import { SafeAreaView } from "react-navigation";
 
-function viewOrder({ navigation }) {
-  const addBP = () => {
-    const product = JSON.stringify({
-      name: name,
-      value: value,
-      description: description
-      //price: parseInt(price)
-    });
+const { width, height } = Dimensions.get("window");
+const viewOrder = ({ navigation }) => {
+  const [productList, setProductList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [fetchMore, setFetchMore] = useState(true);
 
-    Axios.put(
-      `http://178.128.30.185:5000/api/v1/partners/${m_partners_id}`,
-      product,
-      {
-        headers: { "Content-Type": "application/json" }
-      }
-    )
-      .then(response => {
-        console.log("checking response", response);
-        setInputName("");
-        setInputDescription("");
-        //setInputPrice("");
-        setInputValue("");
+  useEffect(() => {
+    getProduct();
+  }, []);
+
+  useEffect(() => {
+    getMoreProduct();
+  }, [page]);
+
+  const getProduct = (refresh) => {
+    if (refresh) {
+      setFetchMore(true);
+    }
+    Axios.get(`http://178.128.30.185:5000/api/v1/orders?page=${page}&limit=8`)
+      .then((response) => {
+        setProductList(response.data.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(JSON.stringify(error));
       });
-
-    //    Axios.get('http://192.168.88.233:5000/api/v1/products').then(response=>{console.log(response.data)}) ;
+    // console.log("Page: ", page);
   };
 
-  const deleteBP = () => {
-    const product = JSON.stringify({
-      name: name,
-      value: value,
-      description: description,
-      price: parseInt(price)
-    });
-
-    Axios.delete(
-      `http://192.168.88.152:5000/api/v1/partners/${m_partners_id}`,
-      {
-        headers: { "Content-Type": "application/json" }
-      }
-    )
-      .then(response => {
-        console.log("checking response", response);
-        setInputName("");
-        setInputDescription("");
-        //setInputPrice("");
-        setInputValue("");
-      })
-      .catch(error => {
-        console.log(JSON.stringify(error));
-      });
+  const getMoreProduct = () => {
+    console.log("check", fetchMore);
+    console.log(page);
+    if (fetchMore) {
+      Axios.get(
+        `http://178.128.30.185:5000/api/v1/orders?page=${page}&limit=8`
+      )
+        .then((response) => {
+          if (response.data.isMaxPage) {
+            setFetchMore(false);
+          }
+          setProductList(response.data.data);
+        })
+        .catch((error) => {
+          console.log(JSON.stringify(error));
+        });
+    }
+    // console.log("Page: ", page);
   };
-
-  //const {width, height} =Dimensions.get('window');
-  const [name, setInputName] = useState(navigation.getParam("name"));
-  const [description, setInputDescription] = useState(
-    navigation.getParam("description")
-  );
-  const [price, setInputPrice] = useState(navigation.getParam("price"));
-  const [value, setInputValue] = useState(navigation.getParam("value"));
-  const [m_partners_id] = useState(navigation.getParam("m_partners_id"));
 
   return (
-    <SafeAreaView style={styles.updateView}>
-      <SafeAreaView style={styles.header}>
-        <Text style={styles.headerText}>Partners</Text>
-      </SafeAreaView>
-      <View style={styles.inputForm}>
-        <View style={styles.textContainer}>
-          {/* <Text style={styles.text}>Name</Text> */}
-          <TextInput
-            style={styles.textInput}
-            value={name}
-            onChangeText={value => setInputName(value)}
-            placeholder="Name"
-          ></TextInput>
-        </View>
-
-        <View style={styles.textContainer}>
-          {/* <Text style={styles.text}>Description</Text> */}
-          <TextInput
-            style={styles.textInput}
-            value={value}
-            onChangeText={value => setInputDescription(value)}
-            placeholder="Value"
-          ></TextInput>
-        </View>
-
-        <View style={styles.textContainer}>
-          {/* <Text style={styles.text}>Description</Text> */}
-          <TextInput
-            style={styles.textInput}
-            value={description}
-            onChangeText={value => setInputDescription(value)}
-            placeholder="Description"
-          ></TextInput>
-        </View>
-
-        <TouchableOpacity onPress={addBP} style={styles.addButton}>
-          <Text style={styles.addButtonText}>UPDATE</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={deleteBP} style={styles.deleteButton}>
-          <Text style={styles.addButtonText}>DELETE</Text>
-        </TouchableOpacity>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>YamYam!</Text>
       </View>
+      {/* <Button
+            onPress={() => navigation.navigate("Create")}
+            title="Learn More"
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+          /> */}
+
+      {/* {productList.map(products => (
+        <View key={products.m_product_id}>
+        <TouchableOpacity
+            onPress={() => navigation.navigate("Detail", products)}
+          >
+            <View style={styles.productContainer}>
+              <Text>{products.name}</Text>
+              <Text style={styles.Subtitle}>{products.description}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+          
+        ))} */}
+      {/* <SafeAreaView style={{ backgroundColor: "red" }}> */}
+      <FlatList
+        data={productList}
+        onEndReachedThreshold={0.01}
+        onEndReached={() => setPage(page + 1)}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={() => getProduct(true)}
+          />
+        }
+        renderItem={({ item, m_product_id }) => (
+          <TouchableOpacity
+            style={styles.productContainer}
+            onPress={() => navigation.navigate("Detail", item)}
+          >
+            <Text>{item.name}</Text>
+            <Text style={styles.Subtitle}>{item.description}</Text>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      ></FlatList>
+      {/* </SafeAreaView> */}
+
+      {/* <View style={styles.footer}></View> */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Create")}
+        style={styles.addButton}
+      >
+        <Text style={styles.addButtonText}>+</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  updateView: {
-    flex: 1,
-    marginTop: "7%"
-  },
-  addButtonText: {
-    fontSize: 30,
-    fontWeight: "bold",
-    alignSelf: "center"
-  },
-  addButton: {
-    backgroundColor: "skyblue",
-    marginVertical: 10,
-    marginHorizontal: 15,
-    elevation: 2,
-    height: 45
-  },
-  deleteButton: {
-    backgroundColor: "red",
-    marginVertical: 10,
-    marginHorizontal: 15,
-    elevation: 2,
-    height: 45
-  },
   header: {
     backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
     borderBottomWidth: 10,
     borderBottomColor: "#00CFE6",
-    paddingTop: 20,
-    paddingBottom: 20
+    marginTop: "7%",
+    paddingVertical: 20,
   },
   productContainer: {
     // flex: 1,
@@ -164,54 +142,63 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#ffffff",
     borderRadius: 10,
-    elevation: 5
+    elevation: 5,
   },
-  inputForm: {
-    marginVertical: 10
+  deleteButton: {
+    backgroundColor: "#ff0000",
+    width: width * 0.5,
+    color: "#ffffff",
   },
-  textContainer: {
-    margin: 5,
-    borderColor: "#FB6949"
+  Title: {
+    width: width,
+    marginHorizontal: width * 0.05,
+    marginVertical: width * 0.03,
+    color: "black",
+    fontSize: 20,
+    fontWeight: "bold",
   },
-  textInput: {
-    alignSelf: "stretch",
-    padding: 10,
-    marginHorizontal: 10,
-    marginVertical: 5,
-    backgroundColor: "#ffffff",
-    fontSize: 23,
-    borderRadius: 5,
-    elevation: 3
+  Subtitle: {
+    marginHorizontal: width * 0.05,
+    fontSize: 15,
+    color: "gray",
   },
-  header: {
-    backgroundColor: "#b00020",
+  footer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
+  addButtonText: {
+    color: "#eeeeee",
+    fontSize: 26,
+    fontWeight: "700",
+  },
+  addButton: {
+    position: "absolute",
+    zIndex: 11,
+    right: 20,
+    bottom: 60,
+    backgroundColor: "#21272b",
+    width: 80,
+    height: 80,
+    borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
-    // borderBottomWidth: 10,
-    // borderBottomColor: "dodgerblue",
-    borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20
+    elevation: 8,
   },
-  headerText: {
-    color: "#ffffff",
-    fontSize: 36,
-    paddingVertical: 15,
-    fontWeight: "bold"
-  }
-
-  // Title:{
-  //   width:width,
-  //   marginHorizontal: width *0.05,
-  //   marginVertical:width *0.03,
-  //   color :'black',
-  //   fontSize:20,
-  //   fontWeight:'bold',
-  // },
-  // Subtitle:{
-  //   marginHorizontal: width *0.05,
-  //   fontSize:15,
-  //   color:'gray'
-  // }
+  buttonContainer: {
+    position: "absolute",
+    width: 100,
+    height: 80,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 2,
+    zIndex: 11,
+    left: 20,
+    bottom: 60,
+  },
 });
 
 export default viewOrder;

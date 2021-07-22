@@ -21,7 +21,7 @@ function updateOrder({ navigation }) {
     });
 
     Axios.put(
-      `http://178.128.30.185:5000/api/v1/partners/${m_partners_id}`,
+      `http://178.128.30.185:5000/api/v1/orders/${m_partners_id}`,
       product,
       {
         headers: { "Content-Type": "application/json" }
@@ -50,7 +50,7 @@ function updateOrder({ navigation }) {
     });
 
     Axios.delete(
-      `http://192.168.88.152:5000/api/v1/partners/${m_partners_id}`,
+      `http://192.168.88.152:5000/api/v1/orders/${m_partners_id}`,
       {
         headers: { "Content-Type": "application/json" }
       }
@@ -69,12 +69,8 @@ function updateOrder({ navigation }) {
 
   //const {width, height} =Dimensions.get('window');
   const [name, setInputName] = useState(navigation.getParam("name"));
-  const [description, setInputDescription] = useState(
-    navigation.getParam("description")
-  );
-  const [price, setInputPrice] = useState(navigation.getParam("price"));
   const [value, setInputValue] = useState(navigation.getParam("value"));
-  const [m_partners_id] = useState(navigation.getParam("m_partners_id"));
+  const [m_partners_id] = useState(navigation.getParam("m_order_id"));
 
   return (
     <SafeAreaView style={styles.updateView}>
@@ -97,17 +93,7 @@ function updateOrder({ navigation }) {
           <TextInput
             style={styles.textInput}
             value={value}
-            onChangeText={value => setInputDescription(value)}
-            placeholder="Value"
-          ></TextInput>
-        </View>
-
-        <View style={styles.textContainer}>
-          {/* <Text style={styles.text}>Description</Text> */}
-          <TextInput
-            style={styles.textInput}
-            value={description}
-            onChangeText={value => setInputDescription(value)}
+            onChangeText={value => setInputValue(value)}
             placeholder="Description"
           ></TextInput>
         </View>
