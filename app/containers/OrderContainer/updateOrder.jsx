@@ -11,7 +11,7 @@ import {
 import Axios from "axios";
 //import { SafeAreaView } from "react-navigation";
 
-function updateBP({ navigation }) {
+function updateOrder({ navigation }) {
   const addBP = () => {
     const product = JSON.stringify({
       name: name,
@@ -214,4 +214,4 @@ const styles = StyleSheet.create({
   // }
 });
 
-export default updateBP;
+export default updateOrder;
