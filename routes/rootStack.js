@@ -16,7 +16,7 @@ import updateBPLocation from "../app/containers/BpContainer/updateBPLocation";
 import createOrder from "../app/containers/OrdeContainer/createOrder";
 import createOrderLine from "../app/containers/OrdeContainer/createOrderLine"
 import updateOrder from "../app/containers/OrdeContainer/updateOrder";
-import viewOrderLine from "../app/containers/OrdeContainer/viewOrderLine";
+import updateOrderLine from "../app/containers/OrdeContainer/updateOrderLine";
 import viewOrder from "../app/containers/OrderContainer/viewOrder";
 
 
@@ -30,7 +30,13 @@ const AppNavigator = createStackNavigator(
     updateBP: updateBP,
     viewBP: viewBP,
     createBPLocation: createBPLocation,
-    updateBPLocation : updateBPLocation
+    updateBPLocation : updateBPLocation,
+    createOrder: createOrder,
+    createOrderLine: createOrderLine,
+    updateOrder:updateOrder,
+    viewOrder: viewOrder,
+    updateOrderLine: updateOrderLine
+
   },
   {
     initialRouteName: "Navigation",

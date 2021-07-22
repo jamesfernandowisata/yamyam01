@@ -17,7 +17,7 @@ import { getPixelSizeForLayoutSize } from "react-native/Libraries/Utilities/Pixe
 
 const { width, height } = Dimensions.get("window");
 
-const createBPLocation = ({ navigation }) => {
+const createOrderLine = ({ navigation }) => {
 
     const [bp_id,setInputC_partnerID] = useState(navigation.getParam("data"));
    // const x = JSON.stringify(navigation.getParam("data"));
@@ -366,4 +366,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default createBPLocation;
+export default createOrderLine;
