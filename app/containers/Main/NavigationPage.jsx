@@ -6,10 +6,15 @@ import {
   ScrollView,
   StyleSheet,
   BackHandler,
+  Dimensions,
   Alert
 } from "react-native";
 import { SafeAreaView } from "react-navigation";
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faHandsHelping } from '@fortawesome/free-solid-svg-icons'
+import { faBox } from '@fortawesome/free-solid-svg-icons'
+import { faStickyNote } from '@fortawesome/free-solid-svg-icons'
+const { width, height} = Dimensions.get("window");
 const NavigationPage = ({ navigation }) => {
   // const onBackPress = useCallback(() => {
   //   Alert.alert("Exit the app", "Do you want to exit the app?", [
@@ -58,19 +63,25 @@ const NavigationPage = ({ navigation }) => {
   return (
     //<HandleBack onBack={this.onBack}>
     <SafeAreaView style={styles.navigationContainer}>
-      <View style={styles.header}>
+    <View style={styles.loginTextContainer}>
+        <View style={styles.header}>
+        <Text style={styles.loginText}>Navigation</Text>
         <Text style={styles.headerText}>YamYam!</Text>
+        </View>
       </View>
+      <View style={styles.MidTextContainer}>
       <TouchableOpacity
         onPress={() => navigation.navigate("Home")}
         style={styles.productContainer}
       >
+        <FontAwesomeIcon icon={faBox} style={styles.iconUser} size={45} color={"white"}/>
         <Text style={styles.textButton}>Product</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate("viewBP")}
         style={styles.BpartnerContainer}
       >
+      <FontAwesomeIcon icon={faHandsHelping} style={styles.iconUser} size={45} color={"white"}/>
         <Text style={styles.textButton}>BPartner</Text>
       </TouchableOpacity>
 
@@ -78,66 +89,91 @@ const NavigationPage = ({ navigation }) => {
         onPress={() => navigation.navigate("viewBP")}
         style={styles.orderContainer}
       >
+      <FontAwesomeIcon icon={faStickyNote} style={styles.iconUser} size={45} color={"white"}/>
         <Text style={styles.textButton}>Order</Text>
       </TouchableOpacity>
-
+      </View>
     </SafeAreaView>
     //</HandleBack>
   );
 };
 
 const styles = StyleSheet.create({
+  loginScreenContainer: {
+    flex: 1,
+    marginTop: "17%"
+  },
   navigationContainer: {
     flex: 1
   },
+  loginTextContainer: {
+    marginBottom: "10%",
+    marginTop: 10,
+    borderRadius: 5,
+    width: width
+
+  },
+  MidTextContainer: {
+    alignItems: "center",
+    alignContent: "center"
+  },
   productContainer: {
-    position: "absolute",
-    margin: 10,
-    backgroundColor: "red",
-    width: "30%",
-    height: 70,
+    //position: "absolute",
+    padding: "2%",
+    backgroundColor: "#b00020",
+    textAlign: "center",
+    alignItems: "center",
+    margin: "2%",
+    width: "70%",
+    height: "20%",
     elevation: 2,
-    top: 150,
-    left: "10.5%"
+    borderRadius:7
+    //top: 150,
+    //left: "10.5%"
   },
   BpartnerContainer: {
-    position: "absolute",
-    margin: 10,
-    backgroundColor: "red",
-    width: "30%",
-    height: 70,
+    //position: "absolute",
+    padding: "2%",
+    margin: "2%",
+    backgroundColor: "#b00020",
+    textAlign: "center",
+    alignItems: "center",
+    width: "70%",
+    height: "20%",
     elevation: 2,
-    top: 150,
-    left: "55%"
+    borderRadius:7
+    //top: 150,
+    //left: "55%"
+  },
+   loginText: {
+    fontSize: 25,
+    alignSelf: "flex-start",
+    marginHorizontal: 15,
+    bottom: 5,
+    color: "grey"
   },
   orderContainer: {
-    position: "absolute",
-    margin: 10,
-    backgroundColor: "red",
-    width: "30%",
-    height: 70,
-    elevation: 2,
-    top: 250,
-    left: "10.5%"
-  },
-  orderLineContainer: {
-    position: "absolute",
-    margin: 10,
-    backgroundColor: "blue",
-    width: "30%",
-    height: 70,
-    elevation: 2,
-    top: 250,
-    left: "55%"
+   // position: "absolute",
+   padding: "2%",
+   backgroundColor: "#b00020",
+   textAlign: "center",
+   alignItems: "center",
+   margin: "2%",
+   width: "70%",
+   height: "20%",
+   elevation: 2,
+   borderRadius:7
+    //top: 250,
+    //left: "10.5%"
   },
   textButton: {
     fontSize: 20,
     color: "#ffffff",
     alignSelf: "center",
-    marginTop: "20%"
+    marginTop: "2%",
+    fontWeight:"bold"
   },
   header: {
-    backgroundColor: "#b00020",
     alignItems: "center",
     justifyContent: "center",
     // borderBottomWidth: 10,
@@ -146,10 +182,13 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     marginTop: "8%"
   },
+  MidTextContainer:{
+    alignItems: "center"
+  },
   headerText: {
-    color: "#ffffff",
-    fontSize: 36,
-    paddingVertical: 15,
+    color: "#b00020",
+    fontSize: 54,
+    paddingVertical: 25,
     fontWeight: "bold"
   }
 });
