@@ -10,6 +10,7 @@ import {
   ScrollView,
   FlatList,
   Card,
+  Image,
   RefreshControl,
   ToastAndroid,
 } from "react-native";
@@ -105,6 +106,9 @@ const viewProduct = ({ navigation }) => {
             style={styles.productContainer}
             onPress={() => navigation.navigate("Detail", item)}
           >
+      <Image
+          src={'reactnative.dev/img/tiny_logo.png'}
+        />
             <Text>{item.name}</Text>
             <Text style={styles.Subtitle}>{item.description}</Text>
           </TouchableOpacity>
