@@ -16,6 +16,8 @@ import {
 } from "react-native";
 import Axios from "axios";
 import { SafeAreaView } from "react-navigation";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBox } from '@fortawesome/free-solid-svg-icons';
 
 const { width, height } = Dimensions.get("window");
 const viewProduct = ({ navigation }) => {
@@ -35,7 +37,7 @@ const viewProduct = ({ navigation }) => {
     if (refresh) {
       setFetchMore(true);
     }
-    Axios.get(`http://178.128.30.185:5000/api/v1/products?page=${page}&limit=8`)
+    Axios.get(`http://178.128.30.185:5000/api/v1/products?page=${page}&limit=10`)
       .then((response) => {
         setProductList(response.data.data);
       })
@@ -50,7 +52,7 @@ const viewProduct = ({ navigation }) => {
     console.log(page);
     if (fetchMore) {
       Axios.get(
-        `http://178.128.30.185:5000/api/v1/products?page=${page}&limit=8`
+        `http://178.128.30.185:5000/api/v1/products?page=${page}&limit=10`
       )
         .then((response) => {
           if (response.data.isMaxPage) {
@@ -68,7 +70,8 @@ const viewProduct = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>YamYam!</Text>
+      <FontAwesomeIcon icon={faBox} style={styles.iconUser} size={45} color={"white"}/>
+        <Text style={styles.headerText}>Product</Text>
       </View>
       {/* <Button
             onPress={() => navigation.navigate("Create")}
@@ -93,6 +96,7 @@ const viewProduct = ({ navigation }) => {
       {/* <SafeAreaView style={{ backgroundColor: "red" }}> */}
       <FlatList
         data={productList}
+        numColumns ={2}
         onEndReachedThreshold={0.01}
         onEndReached={() => setPage(page + 1)}
         refreshControl={
@@ -106,9 +110,9 @@ const viewProduct = ({ navigation }) => {
             style={styles.productContainer}
             onPress={() => navigation.navigate("Detail", item)}
           >
-      <Image
-          src={'reactnative.dev/img/tiny_logo.png'}
-        />
+          <Image
+            source={{uri : 'https://via.placeholder.com/600'}}
+          />
             <Text>{item.name}</Text>
             <Text style={styles.Subtitle}>{item.description}</Text>
           </TouchableOpacity>
@@ -130,23 +134,31 @@ const viewProduct = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#b00020",
     alignItems: "center",
     justifyContent: "center",
     borderBottomWidth: 10,
-    borderBottomColor: "#00CFE6",
+    borderBottomColor: "#ffffff",
     marginTop: "7%",
     paddingVertical: 20,
   },
+  headerText: {
+    color: "#ffffff",
+    fontSize:20,
+    fontWeight: "bold",
+  },
   productContainer: {
-    // flex: 1,
-    paddingVertical: 30,
-    marginTop: 20,
-    marginHorizontal: 20,
+    flex: 1,
+    paddingVertical: '10%',
+    width:'46%',
+    marginTop: '4%',
+    marginHorizontal: '2%',
     alignItems: "center",
     backgroundColor: "#ffffff",
     borderRadius: 10,
     elevation: 5,
+    borderBottomWidth: 10,
+    borderBottomColor: "#b00020",
   },
   deleteButton: {
     backgroundColor: "#ff0000",

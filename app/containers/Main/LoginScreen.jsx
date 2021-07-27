@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     position: "relative",
     alignItems: "center",
     top: 70,
-    backgroundColor: "red",
+    backgroundColor: "#b00020",
     color: "white",
     marginHorizontal: 100,
     borderRadius: 5,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     marginVertical: 5
   },
   textYamYam: {
-    color: "red",
+    color: "#b00020",
     fontSize: 50,
     fontWeight: "bold",
     alignSelf: "center"
