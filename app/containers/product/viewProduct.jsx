@@ -37,7 +37,7 @@ const viewProduct = ({ navigation }) => {
     if (refresh) {
       setFetchMore(true);
     }
-    Axios.get(`http://178.128.30.185:5000/api/v1/products?page=${page}&limit=8`)
+    Axios.get(`http://178.128.30.185:5000/api/v1/products?page=${page}&limit=10`)
       .then((response) => {
         setProductList(response.data.data);
       })
@@ -52,7 +52,7 @@ const viewProduct = ({ navigation }) => {
     console.log(page);
     if (fetchMore) {
       Axios.get(
-        `http://178.128.30.185:5000/api/v1/products?page=${page}&limit=8`
+        `http://178.128.30.185:5000/api/v1/products?page=${page}&limit=10`
       )
         .then((response) => {
           if (response.data.isMaxPage) {
@@ -73,27 +73,6 @@ const viewProduct = ({ navigation }) => {
       <FontAwesomeIcon icon={faBox} style={styles.iconUser} size={45} color={"white"}/>
         <Text style={styles.headerText}>Product</Text>
       </View>
-      {/* <Button
-            onPress={() => navigation.navigate("Create")}
-            title="Learn More"
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-          /> */}
-
-      {/* {productList.map(products => (
-        <View key={products.m_product_id}>
-        <TouchableOpacity
-            onPress={() => navigation.navigate("Detail", products)}
-          >
-            <View style={styles.productContainer}>
-              <Text>{products.name}</Text>
-              <Text style={styles.Subtitle}>{products.description}</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-          
-        ))} */}
-      {/* <SafeAreaView style={{ backgroundColor: "red" }}> */}
       <FlatList
         data={productList}
         numColumns ={2}
@@ -111,12 +90,16 @@ const viewProduct = ({ navigation }) => {
             style={styles.productContainer}
             onPress={() => navigation.navigate("Detail", item)}
           >
+          <View style={styles.ProductImageContainer}>
           <Image
             source={{uri : 'https://via.placeholder.com/600'}}
-            style={{width: '65%', height: '65%'}}
+            style={{width: '100%', height: '100%'}}
           />
-            <Text>{item.name}</Text>
+          </View>
+          <View style={styles.InfoTextContainer}>
+          <Text>{item.name}</Text>
             <Text style={styles.Subtitle}>{item.description}</Text>
+          </View>
           </TouchableOpacity>
         )}
         keyExtractor={(item, index) => index.toString()}
@@ -149,14 +132,15 @@ const styles = StyleSheet.create({
     fontSize:20,
     fontWeight: "bold",
   },
-  flatlistContainer:{
-    height:'100%'
+  ProductImageContainer:{
+    width:'100%',
+    height:'70%'
   },
   productContainer: {
     flex: 1,
     paddingVertical: '2%',
     paddingHorizontal:'2%',
-    width:'46%',
+    width:'44%',
     marginTop: '2%',
     marginHorizontal: '1%',
     alignItems: "center",
