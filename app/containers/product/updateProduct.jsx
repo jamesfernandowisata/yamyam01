@@ -11,7 +11,8 @@ import {
 
 import Axios from "axios";
 import { Item } from "native-base";
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBox } from '@fortawesome/free-solid-svg-icons';
 function updateProduct({ navigation }) {
   const addProduct = () => {
     const product = JSON.stringify({
@@ -118,9 +119,10 @@ function updateProduct({ navigation }) {
   const [c_uom_id] = useState(navigation.getParam("c_uom_id"));
   return (
     <SafeAreaView style={styles.updateView}>
-      <SafeAreaView style={styles.header}>
+     <View style={styles.header}>
+      <FontAwesomeIcon icon={faBox} style={styles.iconUser} size={45} color={"white"}/>
         <Text style={styles.headerText}>Product</Text>
-      </SafeAreaView>
+      </View>
       <View style={styles.inputForm}>
         <View style={styles.textContainer}>
           {/* <Text style={styles.text}>Name</Text> */}
@@ -176,7 +178,7 @@ function updateProduct({ navigation }) {
           <Text style={styles.addButtonText}>UPDATE</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={deleteProduct} style={styles.deleteButton}>
-          <Text style={styles.addButtonText}>DELETE</Text>
+          <Text style={styles.DeleteButtonText}>DELETE</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -184,37 +186,49 @@ function updateProduct({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    backgroundColor: "#b00020",
+    alignItems: "center",
+    justifyContent: "center",
+    borderBottomWidth: 10,
+    borderBottomColor: "#ffffff",
+    marginTop: "7%",
+    paddingVertical: 20,
+  },
+  headerText: {
+    color: "#ffffff",
+    fontSize:20,
+    fontWeight: "bold",
+  },
   updateView: {
     flex: 1,
-    marginTop: "7%"
+
   },
   addButtonText: {
     fontSize: 30,
     fontWeight: "bold",
-    alignSelf: "center"
+    alignSelf: "center",
+    color: "#ffffff"
+  },
+  DeleteButtonText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    alignSelf: "center",
+    color: "#b00020"
   },
   addButton: {
-    backgroundColor: "skyblue",
+    backgroundColor: "#b00020",
     marginVertical: 10,
     marginHorizontal: 15,
     elevation: 2,
     height: 45
   },
   deleteButton: {
-    backgroundColor: "red",
+    backgroundColor: "#ffffff",
     marginVertical: 10,
     marginHorizontal: 15,
     elevation: 2,
     height: 45
-  },
-  header: {
-    backgroundColor: "#ffffff",
-    alignItems: "center",
-    justifyContent: "center",
-    borderBottomWidth: 10,
-    borderBottomColor: "#00CFE6",
-    paddingTop: 20,
-    paddingBottom: 20
   },
   productContainer: {
     // flex: 1,
@@ -242,21 +256,6 @@ const styles = StyleSheet.create({
     fontSize: 23,
     borderRadius: 5,
     elevation: 3
-  },
-  header: {
-    backgroundColor: "#b00020",
-    alignItems: "center",
-    justifyContent: "center",
-    // borderBottomWidth: 10,
-    // borderBottomColor: "dodgerblue",
-    borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20
-  },
-  headerText: {
-    color: "#ffffff",
-    fontSize: 36,
-    paddingVertical: 15,
-    fontWeight: "bold"
   }
 
   // Title:{

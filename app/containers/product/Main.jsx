@@ -14,7 +14,8 @@ import { Picker } from "@react-native-picker/picker";
 
 import { getPixelSizeForLayoutSize } from "react-native/Libraries/Utilities/PixelRatio";
 import { SafeAreaView } from "react-navigation";
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBox } from '@fortawesome/free-solid-svg-icons';
 //const UOM = [{ name: "KG" }, { name: "Ekor" }];
 
 const { width, height } = Dimensions.get("window");
@@ -80,9 +81,10 @@ const Main = ({ navigation, screenName }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <SafeAreaView style={styles.header}>
-          <Text style={styles.headerText}>Product</Text>
-        </SafeAreaView>
+      <View style={styles.header}>
+      <FontAwesomeIcon icon={faBox} style={styles.iconUser} size={45} color={"white"}/>
+        <Text style={styles.headerText}>Product</Text>
+      </View>
 
         <View style={styles.inputForm}>
           <View style={styles.textContainer}>
@@ -174,10 +176,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#b00020",
     alignItems: "center",
     justifyContent: "center",
-    // borderBottomWidth: 10,
-    // borderBottomColor: "dodgerblue",
-    borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20
+    borderBottomWidth: 10,
+    borderBottomColor: "#ffffff",
+    marginTop: "7%",
+    paddingVertical: 20,
+  },
+  headerText: {
+    color: "#ffffff",
+    fontSize:20,
+    fontWeight: "bold",
   },
 
   inputForm: {
@@ -197,13 +204,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     fontSize: 24,
     left: 5
-  },
-
-  headerText: {
-    color: "#ffffff",
-    fontSize: 36,
-    paddingVertical: 15,
-    fontWeight: "bold"
   },
 
   scrollContainer: {
